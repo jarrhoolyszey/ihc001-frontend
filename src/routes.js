@@ -8,8 +8,7 @@ import Admin from './pages/Admin';
 import Especialista from './pages/Especialista';
 import Paciente from './pages/Paciente';
 
-import PacienteCard from './components/PacienteCard';
-import ProfilePicture from './components/ProfilePicture';
+import Login2 from './pages/Login2';
 
 
 function CustomRoute({ isPrivate, role, ...rest }) {
@@ -33,7 +32,7 @@ function CustomRoute({ isPrivate, role, ...rest }) {
 export default function Routes() {
   return (
     <Switch>
-      <Route exact path="/" component={ PacienteCard } />
+      <Route exact path="/" component={ Paciente } />
       <CustomRoute exact path="/login" component={Login} />
       <CustomRoute isPrivate role="paciente" exact path="/paciente" component={ Paciente } />
       <CustomRoute isPrivate role="especialista" exact path="/especialista" component={ Especialista } />

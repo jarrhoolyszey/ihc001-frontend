@@ -19,7 +19,6 @@
 
 html {
   height: 100%;
-  padding: 20px;
   background-color: var(--bg-color);
   display: flex;
   justify-content: center;
