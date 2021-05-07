@@ -4,6 +4,8 @@ import './style.css';
 
 import { Context } from '../../context/AuthContext';
 
+import Button from '../../components/Button';
+
 
 function Login() {
 
@@ -60,9 +62,17 @@ function Login() {
             value={senha}
           />
         </div>
-        <button type="submit">Entrar</button>
+        
+        <Button
+          className="login-button"
+          type="submit"
+          text="Entrar"
+        />
+
         <p id="forgot-password">Esqueceu sua senha?</p>
       </form>
+
+      
       
     </div>
   );

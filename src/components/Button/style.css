@@ -1,0 +1,13 @@
+
+button.button {
+  box-shadow: var(--default-shadow);
+  margin-top: 20px;
+  background-color: var(--p-color);
+  color: var(--light-text);
+  font-weight: bold;
+  height: 40px;
+}
+
+button.button:hover {
+  transform: translateY(-2px);
+}

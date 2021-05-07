@@ -8,9 +8,13 @@ import Admin from './pages/Admin';
 import Especialista from './pages/Especialista';
 import Paciente from './pages/Paciente';
 
+import PacienteCard from './components/PacienteCard';
+import ProfilePicture from './components/ProfilePicture';
+
 
 function CustomRoute({ isPrivate, role, ...rest }) {
   const { loading, authenticated } = useContext(Context);
+  
 
   if(loading) {
     console.log('Routes: Loading?', loading);
@@ -29,6 +33,7 @@ function CustomRoute({ isPrivate, role, ...rest }) {
 export default function Routes() {
   return (
     <Switch>
+      <Route exact path="/" component={ PacienteCard } />
       <CustomRoute exact path="/login" component={Login} />
       <CustomRoute isPrivate role="paciente" exact path="/paciente" component={ Paciente } />
       <CustomRoute isPrivate role="especialista" exact path="/especialista" component={ Especialista } />
