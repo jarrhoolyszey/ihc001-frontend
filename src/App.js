@@ -1,20 +1,22 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 
+import { CssBaseline } from '@material-ui/core';
+
 import { AuthProvider } from './context/AuthContext';
 
 import Routes from './routes';
 import history from './history';
 
-import './global.css';
-
 
 const App = () => {
   return (
     <AuthProvider>
-      <Router history={history}>
-        <Routes />
-      </Router>
+      <CssBaseline>
+        <Router history={history}>
+          <Routes />
+        </Router>
+      </CssBaseline>
     </AuthProvider>
   );
 }

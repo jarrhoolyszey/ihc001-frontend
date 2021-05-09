@@ -1,81 +1,30 @@
-import React, { useState, useContext, useEffect } from 'react';
-
-import './style.css';
-
-import { Context } from '../../context/AuthContext';
-
-import Button from '../../components/Button';
+import React from 'react';
 
 
-function Login() {
+import {
+  Paper,
+  TextField,
+  Button,
+} from '@material-ui/core';
 
-  
-  const { authenticated, handleLogin } = useContext(Context);
-  
-  useEffect(() => {
-    console.log('Login :');
-    console.log('Authenticated?', authenticated);
-  }, []);
 
-  console.log('Login', authenticated);
+import useStyles from './style';
 
-  const [ email, setEmail ] = useState("");
-  const [ senha, setSenha ] = useState("");
 
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function handleSenhaChange(e) {
-    setSenha(e.target.value);
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    const payload = {
-      email,
-      senha,
-    }
-    
-    await handleLogin(payload);
-  }
+const Login2 = () => {
+  const styles = useStyles();
 
   return (
-    <div id="form-wrapper">
-      <h3 id="login-header">Login</h3>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="input-wrapper">
-          <input 
-            type="text" 
-            placeholder="E-mail" 
-            onChange={handleEmailChange}
-            value={email} 
-          />
-        </div>
-
-        <div className="input-wrapper">
-          <input
-            type="password" 
-            placeholder="Senha"
-            onChange={handleSenhaChange}
-            value={senha}
-          />
-        </div>
-        
-        <Button
-          className="login-button"
-          type="submit"
-          text="Entrar"
-        />
-
-        <p id="forgot-password">Esqueceu sua senha?</p>
+    <Paper className={styles.wrapper} elevation={3}>
+      <h1 className={styles.header}>Login</h1>
+      <form className={styles.loginForm} noValidate autoComplete="off" fullWidth>  
+        <TextField className={styles.inputField} id="email-field" label="Email" type="email" color="primary" />        
+        <TextField className={styles.inputField} id="password-field" label="Senha" type="password" />
+        <Button className={styles.loginButton} variant="contained" color="primary">Entrar</Button>
+        <p className={styles.forgotPassword}>Esqueceu sua senha?</p>
       </form>
-
-      
-      
-    </div>
-  );
+    </Paper>
+  )
 }
 
-export default Login;
+export default Login2;

@@ -7,11 +7,7 @@ import {
   Tab,
 } from '@material-ui/core';
 
-
-import DefaultImage from '../../img/default-profile-picture.png'
-import Sidebar from '../../components/Sidebar';
-
-import DadosPessoais from './tabs/DadosPessoais'; 
+import Sidebar from '../../components/Sidebar'; 
 
 import theme from '../../theme';
 
@@ -89,17 +85,21 @@ const VerticalTabs = () => {
           className={classes.tabs}
         > 
           
-          <Tab className="tab" label="Dados pessoais" {...a11yProps(0)} />
-          <Tab className="tab" label="Atendimentos" {...a11yProps(1)} />
+          <Tab className="tab" label="Atendimento" {...a11yProps(0)} />
+          <Tab className="tab" label="Dados Paciente" {...a11yProps(1)} />
+          <Tab className="tab" label="Histórico" {...a11yProps(2)} />
           
         </Tabs>
       </Sidebar>
 
       <TabPanel className={classes.tabPanel} value={value} index={0}>
-        <DadosPessoais />
+        Atendimento
       </TabPanel>
       <TabPanel className={classes.tabPanel} value={value} index={1}>
-        Atendimentos
+        Dados paciente
+      </TabPanel>
+      <TabPanel className={classes.tabPanel} value={value} index={2}>
+        Historico
       </TabPanel>
 
     </div>
