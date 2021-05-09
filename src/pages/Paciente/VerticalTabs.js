@@ -7,13 +7,12 @@ import {
   Tab,
 } from '@material-ui/core';
 
+import Sidebar from 'components/Sidebar';
 
-import DefaultImage from '../../img/default-profile-picture.png'
-import Sidebar from '../../components/Sidebar';
+import DadosPessoais from './tabs/DadosPessoais';
+import Atendimentos from './tabs/Atendimentos';
 
-import DadosPessoais from './tabs/DadosPessoais'; 
-
-import theme from '../../theme';
+import theme from 'themes/theme';
 
 
 const TabPanel = (props) => {
@@ -99,7 +98,7 @@ const VerticalTabs = () => {
         <DadosPessoais />
       </TabPanel>
       <TabPanel className={classes.tabPanel} value={value} index={1}>
-        Atendimentos
+        <Atendimentos />
       </TabPanel>
 
     </div>

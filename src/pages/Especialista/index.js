@@ -8,10 +8,10 @@ import {
 
 } from '@material-ui/core';
 
-import Header from '../../components/Header';
+import Header from 'components/Header';
 import VerticalTabs from './VerticalTabs';
 
-import theme from '../../theme';
+import theme from 'themes/theme';
 
 const useStyles = makeStyles({
   root: {

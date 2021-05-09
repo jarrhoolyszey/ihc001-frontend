@@ -7,9 +7,9 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import CategoryCard from '../../../components/CategoryCard';
+import CategoryCard from 'components/CategoryCard';
 
-import theme from '../../../theme';
+import theme from 'themes/theme';
 
 const useStyles = makeStyles({
   root: {
@@ -82,8 +82,8 @@ const DadosPessoais = () => {
       </Paper>
 
       {
-        categories.map(categoria => (
-          <CategoryCard category={categoria} />
+        categories.map((categoria, index) => (
+          <CategoryCard key={`${categoria}-${index}`}category={categoria} />
         ))
       }
 

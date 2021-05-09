@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-import api from '../api';
-import history from '../history';
+import api from '../services/api';
+import history from '../services/history';
 
 
 const Context = createContext();

@@ -7,9 +7,9 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import DefaultImage from '../img/default-profile-picture.png';
+import DefaultImage from 'imgs/default-profile-picture.png';
 
-import theme from '../theme';
+import theme from 'themes/theme';
 
 
 const useStyles = makeStyles({

@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import theme from '../theme';
+import theme from 'themes/theme';
 
 const useStyles = makeStyles({
   root: {

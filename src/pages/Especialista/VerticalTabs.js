@@ -7,9 +7,13 @@ import {
   Tab,
 } from '@material-ui/core';
 
-import Sidebar from '../../components/Sidebar'; 
+import Sidebar from 'components/Sidebar'; 
 
-import theme from '../../theme';
+import Atendimento from './tabs/Atendimento';
+import DadosPaciente from './tabs/DadosPaciente';
+import HistoricoPaciente from './tabs/HistoricoPaciente';
+
+import theme from 'themes/theme';
 
 
 const TabPanel = (props) => {
@@ -54,6 +58,7 @@ const useStyles = makeStyles({
   tabPanel: {
     flexGrow: 1,
     overflowY: 'hidden',
+    padding: '20px',
   }
 });
 
@@ -93,13 +98,13 @@ const VerticalTabs = () => {
       </Sidebar>
 
       <TabPanel className={classes.tabPanel} value={value} index={0}>
-        Atendimento
+        <Atendimento />
       </TabPanel>
       <TabPanel className={classes.tabPanel} value={value} index={1}>
-        Dados paciente
+        <DadosPaciente />
       </TabPanel>
       <TabPanel className={classes.tabPanel} value={value} index={2}>
-        Historico
+        <HistoricoPaciente />
       </TabPanel>
 
     </div>
