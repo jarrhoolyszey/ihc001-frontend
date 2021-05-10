@@ -14,8 +14,6 @@ function CustomRoute({ isPrivate, role, ...rest }) {
   
 
   if(loading) {
-    console.log('Routes: Loading?', loading);
-    setTimeout(3000);
     return <h1>Loading...</h1>;
   }
 
@@ -30,7 +28,7 @@ function CustomRoute({ isPrivate, role, ...rest }) {
 export default function Routes() {
   return (
     <Switch>
-      <Route exact path="/" component={ Paciente } />
+      <Route exact path="/" component={ Login } />
       <CustomRoute exact path="/login" component={ Login } />
       <CustomRoute isPrivate role="paciente" exact path="/paciente" component={ Paciente } />
       <CustomRoute isPrivate role="especialista" exact path="/especialista" component={ Especialista } />

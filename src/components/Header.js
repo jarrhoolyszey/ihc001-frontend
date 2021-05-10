@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
 import { Button } from '@material-ui/core';
+
+import { Context } from 'context/AuthContext';
 
 import theme from 'themes/theme';
 
@@ -26,13 +28,14 @@ const useStyles = makeStyles({
 })
 
 const Header = (props) => {
+  const { handleLogout } = useContext(Context);
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Button 
         variant="outlined" 
-        onClick={props.onClick}
+        onClick={handleLogout}
       >
       Sair
       </Button>

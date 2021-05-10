@@ -69,7 +69,7 @@ const a11yProps = (index) => {
 }
 
 
-const VerticalTabs = () => {
+const VerticalTabs = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 

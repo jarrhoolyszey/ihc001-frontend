@@ -8,6 +8,8 @@ const theme = {
     secondaryLight: '#f44336',
     secondaryDark: '#ba000d',
     secondaryText: '#000000',
+    tertiary: '#37197c',
+    
   }
 };
 

@@ -5,8 +5,9 @@ import { CssBaseline } from '@material-ui/core';
 
 import { AuthProvider } from './context/AuthContext';
 
-import history from "services/history";
-import Routes from "./routes";
+import history from 'services/history';
+
+import Routes from './routes';
 
 
 const App = () => {
