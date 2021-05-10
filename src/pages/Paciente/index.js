@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 const Paciente = (props) => {
   const classes = useStyles();
-  const { authenticated, user } = useContext(Context); 
+  const { user } = useContext(Context); 
 
   return (
     <div className={classes.wrapper}>

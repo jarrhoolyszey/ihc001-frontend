@@ -1,6 +1,4 @@
-import React, { useContext } from 'react'
-
-import { Context } from '../../context/AuthContext';
+import React from 'react'
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -11,7 +9,6 @@ import {
 import Header from 'components/Header';
 import VerticalTabs from './VerticalTabs';
 
-import theme from 'themes/theme';
 
 const useStyles = makeStyles({
   root: {
@@ -22,8 +19,6 @@ const useStyles = makeStyles({
 
 const Especialista = () => {
   const css = useStyles();
-  
-  const { authenticated, handleLogout } = useContext(Context);
 
   return (
     <div className={css.root}>

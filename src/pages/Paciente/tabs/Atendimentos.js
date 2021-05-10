@@ -25,13 +25,7 @@ const useStyles = makeStyles({
 
 const Atendimentos = (props) => {
   const css = useStyles();
-  
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 100 }, 
-    { field: 'data', headerName: 'Data', width: 150 },
-    { field: 'diagnostico', headerName: 'Diagnóstico', sortable: false, width: 150},
-    { field: 'prescricao', headerName: 'Prescrição', sortable: false, width: 150},
-  ];
+
   const rows = [
     { 
       id: '1',

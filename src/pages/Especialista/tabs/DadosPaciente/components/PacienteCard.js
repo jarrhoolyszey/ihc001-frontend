@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 
 import DefaultImage from 'imgs/default-profile-picture.png';
-import theme from 'themes/theme';
 
 import paciente from 'testes/paciente';
 
@@ -34,8 +33,6 @@ const useStyles = makeStyles({
 
 const PacienteCard = (props) => {
   const css = useStyles();
-  const [changed, setChanged] = useState(false);
-
 
   return (
     <Paper elevation={3} className={css.root}>

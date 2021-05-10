@@ -6,8 +6,6 @@ import {
 
 } from '@material-ui/core';
 
-import theme from 'themes/theme';
-
 
 const useStyles = makeStyles({
   root: {

@@ -11,8 +11,6 @@ import {
 
 import { Context } from 'context/AuthContext';
 
-import history from 'services/history';
-
 import Logo from 'imgs/logo.png';
 
 import theme from 'themes/theme';
@@ -120,7 +118,7 @@ const Login = () => {
     
       <Paper className={css.wrapper} elevation={3}>
         <div className="logo-wrapper">
-          <img className="logo" src={Logo} />
+          <img className="logo" src={Logo} alt="logo"/>
         </div>
 
         <div className="form-wrapper">
