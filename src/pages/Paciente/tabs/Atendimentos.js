@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -12,19 +12,39 @@ import {
   TableCell,
 } from '@material-ui/core';
 
+import { Context } from 'context/AuthContext';
+
+import theme from 'themes/theme';
+
 
 const useStyles = makeStyles({
   root: {
-    border: '1px dashed black',
     padding: '20px',
     height: '100vh',
     overflowY: 'scroll',
+  
+    '& th': {
+      backgroundColor: theme.palette.primaryLight,
+      color: theme.palette.primaryText,
+      fontWeight: 'bold',
+    },
+
+    '& tr:nth-child(even)': {
+      backgroundColor: '#EEE',
+    }
   }
 });
 
 
 const Atendimentos = (props) => {
   const css = useStyles();
+  const { user } = useContext(Context);
+  const [ atendimentos, setAtendimentos ] = useState([]);
+
+  useEffect(() => {
+    /* Requisitar os atendimentos do usuario pelo ID */
+    console.log('Requisitando dados de atendimentos ...');
+  }, []);
 
   const rows = [
     { 

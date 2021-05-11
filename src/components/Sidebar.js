@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState }  from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core';
 
 import DefaultImage from 'imgs/default-profile-picture.png';
+
+import { Context } from 'context/AuthContext';
 
 import theme from 'themes/theme';
 
@@ -20,6 +22,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'center',
     minWidth: '250px',
+    maxWidth: '250px',
     height: '100vh',
     
     '& .avatar-wrapper': {
@@ -34,20 +37,25 @@ const useStyles = makeStyles({
         width: '100px',
         marginBottom: '20px',
       },
+
+      '& .avatar-message': {
+        textAlign: 'center',
+      }
     },
   }
 });
 
-
 const Sidebar = (props) => {
   const css = useStyles();
+  const { nome } = useContext(Context).user;
   const { children } = props;
-  
+
+
   return (
     <div className={css.root}>
       <div className="avatar-wrapper">
         <Avatar className="avatar" src={DefaultImage} />
-        <Typography className="avatar-message">Bem vindo, mané</Typography>
+        <Typography className="avatar-message">Bem vindo, {nome}</Typography>
       </div>
       {children}
     </div>

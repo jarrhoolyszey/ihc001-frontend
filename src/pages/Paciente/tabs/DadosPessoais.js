@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -7,9 +7,14 @@ import {
   Typography,
 } from '@material-ui/core';
 
+import { Context } from 'context/AuthContext';
+
 import CategoryCard from 'components/CategoryCard';
 
 import theme from 'themes/theme';
+
+import paciente from 'testes/paciente';
+
 
 const useStyles = makeStyles({
   root: {
@@ -42,47 +47,48 @@ const useStyles = makeStyles({
 
 
 const DadosPessoais = () => {
-  const classes = useStyles();
+  const css = useStyles();
+  let { user } = useContext(Context);
 
-  const categories = [
-    {
-      title: 'alergias',
-      items: [
-        'proteina do leite',
-        'iodo',
-      ]
-    },
-    {
-      title: 'Outras Alergias',
-      items: [
-        'Proteiina do Leite 2',
-        'Iodo 2',
-        'Outra qualquer ai'
-      ]
+  user = paciente;
+
+  function generateAddressString(endereco) {
+    let str =  `${endereco.logradouro}, ${endereco.numero}`;
+    
+    if (endereco.complemento) {
+      str += ` - ${endereco.complemento}`;
     }
-  ]
+
+    str += ` - ${endereco.CEP} - ${endereco.bairro}`;
+    str += ` - ${endereco.cidade} - ${endereco.estado}`;
+    
+    return str;
+  }
 
   return (
-    <div className={classes.root}>
+    <div className={css.root}>
       <Paper className="category" elevation={3} square>
         <Typography className="category-title" variant={'subtitle1'}>Informações Pessoais:</Typography>
         <div className="category-fields">
-          <Typography variant={'body2'}><span className='field-title'>Nome:</span></Typography>
-          <Typography variant={'body2'}><span className='field-title'>CPF:</span></Typography>
-          <Typography variant={'body2'}><span className='field-title'>RG:</span></Typography>
-          <Typography variant={'body2'}><span className='field-title'>Data de nascimento:</span></Typography>
-          <Typography variant={'body2'}><span className='field-title'>Sexo:</span></Typography>
-          <Typography variant={'body2'}><span className='field-title'>Email:</span></Typography>
+          <Typography variant={'body2'}><span className='field-title'>Nome:</span> {user.nome + ' ' + user.sobrenome}</Typography>
+          <Typography variant={'body2'}><span className='field-title'>Sexo:</span> {user.sexo}</Typography>
+          <Typography variant={'body2'}><span className='field-title'>CPF:</span> {user.CPF}</Typography>
+          <Typography variant={'body2'}><span className='field-title'>RG:</span> {user.RG}</Typography>
+          <Typography variant={'body2'}><span className='field-title'>Data de nascimento:</span> {user.data_nascimento}</Typography>
+          <Typography variant={'body2'}><span className='field-title'>Email:</span> {user.email}</Typography>
         </div>
 
         <Typography className="category-title" variant={'subtitle1'}>Endereço:</Typography>
         <div className="category-fields">
-          <Typography variant={'body2'}>Logradouro, 10 - Complemento - CEP - Bairro - Cidade - Estado</Typography>
+          <Typography variant={'body2'}>
+            { generateAddressString(user.endereco) }
+          </Typography>
         </div>
       </Paper>
 
       {
-        categories.map((categoria, index) => (
+        /* Lista as categorias do 'user' e seus itens */
+        user.categorias.map((categoria, index) => (
           <CategoryCard key={`${categoria}-${index}`}category={categoria} />
         ))
       }

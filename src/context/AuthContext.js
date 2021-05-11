@@ -30,12 +30,14 @@ function AuthProvider({ children }) {
 
 
   function redirectByRole(role) {
-    if( role === 'especialista') {
-      history.push('/especialista')
-    } else if( role === 'paciente') {
-      history.push('/paciente');
-    } else if( role === 'admin') {
-      history.push('/admin');
+    if( authenticated ) {
+      if( role === 'especialista') {
+        history.push('/especialista')
+      } else if( role === 'paciente') {
+        history.push('/paciente');
+      } else if( role === 'admin') {
+        history.push('/admin');
+      }
     }
   }
 
@@ -53,15 +55,7 @@ function AuthProvider({ children }) {
         api.defaults.headers.Authorization = `Bearer ${token}`;
 
         setAuthenticated(true);
-
-        // redirecionar para a pagina adequada
-        // if(permissao === 'especialista') {
-        //   history.push('/especialista');
-        // } else if (permissao === 'paciente') {
-        //   history.push('/paciente');
-        // } else if (permissao === 'admin') {
-        //   history.push('/admin');
-        // }
+        setUser(response.data.user);
 
         redirectByRole(permissao);
       }
@@ -92,7 +86,7 @@ function AuthProvider({ children }) {
       user, 
       handleLogin, 
       handleLogout, 
-      redirectByRole 
+      redirectByRole,
     }}>
       {children}
     </Context.Provider>

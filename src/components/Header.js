@@ -6,19 +6,26 @@ import { Button } from '@material-ui/core';
 
 import { Context } from 'context/AuthContext';
 
+import Logo from 'imgs/logo.png';
+
 import theme from 'themes/theme';
 
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    //justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     width: '100%',
     minHeight: '56px',
     maxHeight: '56px',
     padding: '10px 20px',
     backgroundColor: theme.palette.primary,
     color: theme.palette.primaryText,
+
+    '& #logo': {
+      width: '50px',
+    },
 
     '& button': {
       color: theme.palette.primaryText,
@@ -33,6 +40,8 @@ const Header = (props) => {
 
   return (
     <div className={classes.root}>
+      <img id="logo" src={Logo} alt="logo" />
+      
       <Button 
         variant="outlined" 
         onClick={handleLogout}
