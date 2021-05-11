@@ -14,7 +14,7 @@ const paciente = {
     CEP: '12345-678',
     estado: 'SP',
     cidade: 'Sao Paulo',
-    bairro: 'Vila Bololo'
+    bairro: 'Vila Bololo',
   },
   categorias: [
     {

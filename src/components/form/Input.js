@@ -19,10 +19,11 @@ const Input = (props) => {
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        error={error? true : false}
+        helperText={error}
         {...rest}
       />
-      {error && <Typography>{error}</Typography>}
-    </>
+      </>
   )
 }
 
