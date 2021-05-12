@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/styles';
@@ -9,9 +9,12 @@ import {
 
 import Sidebar from 'components/Sidebar'; 
 
+import BuscarPaciente from './tabs/BuscarPaciente';
 import Atendimento from './tabs/Atendimento';
 import DadosPaciente from './tabs/DadosPaciente';
 import HistoricoPaciente from './tabs/HistoricoPaciente';
+
+import { Context } from 'context/PacienteContext';
 
 import theme from 'themes/theme';
 
@@ -74,6 +77,7 @@ const a11yProps = (index) => {
 const VerticalTabs = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const { paciente } = useContext(Context);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -90,20 +94,24 @@ const VerticalTabs = () => {
           className={classes.tabs}
         > 
           
-          <Tab className="tab" label="Atendimento" {...a11yProps(0)} />
-          <Tab className="tab" label="Dados Paciente" {...a11yProps(1)} />
-          <Tab className="tab" label="Histórico" {...a11yProps(2)} />
+          <Tab className="tab" label="Buscar Paciente" {...a11yProps(0)} />
+          <Tab className="tab" label="Atendimento" {...a11yProps(1)} />
+          <Tab className="tab" label="Dados Paciente" {...a11yProps(2)} />
+          <Tab className="tab" label="Histórico" {...a11yProps(3)} />
           
         </Tabs>
       </Sidebar>
 
       <TabPanel className={classes.tabPanel} value={value} index={0}>
-        <Atendimento />
+        <BuscarPaciente />
       </TabPanel>
       <TabPanel className={classes.tabPanel} value={value} index={1}>
-        <DadosPaciente />
+        <Atendimento />
       </TabPanel>
       <TabPanel className={classes.tabPanel} value={value} index={2}>
+        <DadosPaciente />
+      </TabPanel>
+      <TabPanel className={classes.tabPanel} value={value} index={3}>
         <HistoricoPaciente />
       </TabPanel>
 

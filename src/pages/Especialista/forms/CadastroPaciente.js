@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
-import { Button, Paper, MenuItem } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 
 import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
 import Select from 'components/form/Select';
 
 import useForm from 'hooks/useForm';
+import useAxios from 'hooks/useAxios';
+
+import {
+  CADASTRAR_PACIENTE, LISTAR_PACIENTES,
+} from 'services/api'
+
 
 const useStyles = makeStyles({
   root: {
@@ -37,6 +43,8 @@ const useStyles = makeStyles({
 
 
 const CadastroPaciente = () => {
+  const { loading, error, request } = useAxios();
+
   const [sexo, setSexo] = useState('');
   const nome = useForm();
   const sobrenome = useForm(false);
@@ -58,10 +66,42 @@ const CadastroPaciente = () => {
   const size = 'small';
 
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    
+    const senha = (
+      CPF.value
+        .replaceAll('.', '')
+        .slice(0, 3)
+    );
 
-    nome.validate();
+    const dadosPaciente = {
+      nome: nome.value,
+      sobrenome: sobrenome.value,
+      sexo: sexo,
+      email: email.value,
+      CPF: CPF.value,
+      RG: RG.value,
+      data_nascimento: nascimento.value,
+      telefone: telefone.value,
+      endereco: {
+        logradouro: logradouro.value,
+        numero: numero.value,
+        complemento: complemento.value,
+        cep: CEP.value,
+        estado: estado.value,
+        cidade: cidade.value,
+        bairro: bairro.value, 
+      },
+      categorias: [],
+      senha: senha,
+    }
+
+    const config = (CADASTRAR_PACIENTE(dadosPaciente));
+
+    const res = await request(config);
+
+    //set paciente to PacienteContext
   }
   
   return (
@@ -94,10 +134,9 @@ const CadastroPaciente = () => {
             id="sexo"
             label="Sexo"
             value={sexo}
-            setValue={setSexo}
+            onChange={({target}) => setSexo(target.value)}
             variant={variant}
             size={size}
-            required
             fullWidth
           />
 
@@ -110,6 +149,7 @@ const CadastroPaciente = () => {
             maskChar=""
             variant={variant}
             size={size}
+            required
             fullWidth 
             {...CPF}
           />
@@ -118,7 +158,7 @@ const CadastroPaciente = () => {
             id="rg" 
             label="RG" 
             type="text"
-            placeholder="00.000.000-00"
+            placeholder="00.000.000-0"
             mask="99.999.999-99"
             maskChar=""
             variant={variant}
@@ -231,7 +271,10 @@ const CadastroPaciente = () => {
           />
         </div>
 
-        <Button variant="contained" color="primary">Cadastrar</Button>
+        { loading ? 
+          <Button variant="contained" color="primary" type="submit">Cadastrando...</Button> :
+          <Button variant="contained" color="primary" type="submit">Cadastrar</Button>
+        }
       </form>
     </Paper>
   )
