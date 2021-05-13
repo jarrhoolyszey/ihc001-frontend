@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   }
 })
 
-const PacienteCard = (props) => {
+const PacienteCard = () => {
   const css = useStyles();
 
   return (
@@ -48,6 +48,10 @@ const PacienteCard = (props) => {
             label="Nome" 
             variant="outlined" 
             value={paciente.nome + ' ' + paciente.sobrenome}
+            InputProps={{
+              readOnly: true,
+            }}
+            
         />
         </Grid>
       </Grid>

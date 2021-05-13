@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import {
 
@@ -6,13 +6,20 @@ import {
 
 import PacienteCard from './components/PacienteCard';
 
+import { Context } from 'context/PacienteContext';
 
-const DadosPaciente = (props) => {
-  return (
-    <>
-      <PacienteCard />
-    </>
-  )
+const DadosPaciente = () => {
+  const { paciente } = useContext(Context);
+  
+  if( paciente ) {
+    return (
+      <>
+        <PacienteCard />
+      </>
+    )
+  } else {
+    return <h1>{'Sem paciente no momento =('}</h1>
+  }
 }
 
 export default DadosPaciente;

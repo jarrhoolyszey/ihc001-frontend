@@ -3,13 +3,16 @@ import React, { createContext, useState } from 'react';
 const Context = createContext();
 
 function PacienteProvider ({children}) {
-  const [paciente, setPaciente] = useState('José');
-  const [loading, setLoading] = useState(false);
+  const [paciente, setPaciente] = useState(null);
+  
+  function selectPaciente(p) {
+    setPaciente(p);
+  }
 
   return (
     <Context.Provider value={{
       paciente,
-      loading,
+      selectPaciente,
     }}>
       {children}
     </Context.Provider>

@@ -43,7 +43,7 @@ function AuthProvider({ children }) {
 
   async function handleLogin(payload) {
     try{
-      const response = await api.post('/login', payload);
+      const response = await api.post('/auth/login', payload);
       
       if( response.status === 200) {
         const { token, user } = response.data;

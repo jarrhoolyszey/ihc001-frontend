@@ -23,7 +23,7 @@ const HistoricoPaciente = (props) => {
   if(paciente) {
     return (
       <div className={css.root}>
-        <h1>Historico do Paciente: {paciente}</h1>
+        <h1>Historico do Paciente: {paciente.nome}</h1>
       </div>
     )
   } else {

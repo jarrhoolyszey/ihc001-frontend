@@ -10,6 +10,14 @@ const PACIENTES_URL = 'pacientes';
 
 
 // Requests for '/paciente'
+export function BUSCAR_PACIENTE(query) {
+  return {
+    method: 'get',
+    url: `${PACIENTES_URL}/buscar`,
+    params: query,
+  }
+}
+
 export function LISTAR_PACIENTES() {
   return {
     method: 'get',

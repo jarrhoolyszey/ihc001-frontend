@@ -4,34 +4,36 @@ import api from 'services/api';
 
 
 const useAxios = () => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  //const [data, setData] = useState(null);
+  //const [error, setError] = useState(null);
+  const [requesting, setRequesting] = useState(false);
   
-  const request = useCallback(async (config) => {
+  const request = async (config) => {
     let response;
 
     try {
-      setError(null);
-      setLoading(true);
+      //setData(null);
+      //setError(null);
+      setRequesting(true);
       response = await api.request(config);
       
-      if (response.statusText !== 'OK') throw new Error(response.data);
+      if (response.statusText !== 'OK') {
+        throw new Error(response.data);
+      }
 
     } catch (err) {
-      setError(err.message);
-
+      //setError(err.message);
     } finally {
       //setData(response.data);
-      setLoading(false);
+      setRequesting(false);
       return response;
     }
-  }, [])
+  }
 
   return {
-    data,
-    error,
-    loading,
+    //data,
+    //error,
+    requesting,
     request,
   }
 }
