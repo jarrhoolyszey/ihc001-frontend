@@ -178,15 +178,15 @@ const CadastroPaciente = () => {
           />
         </div>
         <div className="form-row">
-          <Input 
+          <MaskedInput 
             id="nascimento" 
             label="Nascimento" 
-            type="date"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            mask="99/99/9999"
+            maskChar=""
             variant={variant}
             size={size}
-            InputLabelProps={{
-              shrink: true,
-            }}
             {...nascimento}
           />
           

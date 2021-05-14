@@ -14,7 +14,7 @@ const DadosPaciente = () => {
   if( paciente ) {
     return (
       <>
-        <PacienteCard />
+        <PacienteCard paciente={paciente} />
       </>
     )
   } else {

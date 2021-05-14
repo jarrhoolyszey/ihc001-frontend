@@ -47,5 +47,13 @@ export function CADASTRAR_PACIENTE(dadosPaciente) {
   }
 }
 
+export function ATUALIZAR_PACIENTE(id, dadosPaciente) {
+  return {
+    method: 'put',
+    url: `${PACIENTES_URL}/${id}`,
+    data: dadosPaciente
+  }
+}
+
 
 export default api; 
