@@ -16,6 +16,7 @@ import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
 
 import { Context } from 'context/PacienteContext';
+import { TabContext } from 'context/TabContext';
 
 import useForm from 'hooks/useForm';
 import useAxios from 'hooks/useAxios';
@@ -27,6 +28,8 @@ import {
 
 const useStyles = makeStyles({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
     width: '100%',
     border: '1px dashed green',
   },
@@ -51,13 +54,15 @@ const useStyles = makeStyles({
 })
 
 
-const BuscarPacienteForm = () => {
-  const css = useStyles();
+const BuscarPacienteForm = (props) => {
   const { selectPaciente } = useContext(Context);
+  const { tab, changeTab } = useContext(TabContext);
+  const css = useStyles();
   const { requesting, request } = useAxios();
   const CPF = useForm();
   const email = useForm();
   const [resultado, setResultado] = useState([]);
+  const { toggleDialog } = props;
 
 
   const handleSubmit = async (e) => {
@@ -70,8 +75,16 @@ const BuscarPacienteForm = () => {
 
     const {data} = await request(BUSCAR_PACIENTE(query));
     
-    if(data)
+    if(data.length > 0) {
       setResultado(data);
+    } else {
+      toggleDialog(true);
+    }
+  }
+
+  const handleSelectClick = (paciente) => {
+    selectPaciente(paciente);
+    changeTab(1); // tab de atendimento
   }
 
 
@@ -117,7 +130,7 @@ const BuscarPacienteForm = () => {
                 <Button 
                   variant="outlined" 
                   color="primary"
-                  onClick={() => selectPaciente(paciente)}
+                  onClick={ () => handleSelectClick(paciente) }
                 >
                   Selecionar
                 </Button>

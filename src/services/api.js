@@ -7,9 +7,23 @@ const api = axios.create({
 });
 
 const PACIENTES_URL = 'pacientes';
+const AUTH_URL = 'auth';
 
 
-// Requests for '/paciente'
+
+/*********************  Requests for '/auth' ****************************/
+export function VERIFICAR_TOKEN(token) {
+  return {
+    method: 'post',
+    url: `${AUTH_URL}/verify-token`,
+    data: {
+      token
+    }
+  }
+}
+
+
+/*********************  Requests for '/paciente' ****************************/
 export function BUSCAR_PACIENTE(query) {
   return {
     method: 'get',

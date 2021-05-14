@@ -1,8 +1,13 @@
 import React, { createContext, useState, useEffect } from 'react';
 
+import useAxios from 'hooks/useAxios';
+
 import api from 'services/api';
 import history from 'services/history';
 
+import {
+  VERIFICAR_TOKEN,
+} from 'services/api';
 
 const Context = createContext();
 
@@ -11,15 +16,35 @@ function AuthProvider({ children }) {
   const [ authenticated, setAuthenticated ] = useState(false);
   const [ loading, setLoading ] = useState(true);
   const [ user, setUser ] = useState({});
+  const { requesting, request } = useAxios();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
     if(token && user) {
-      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
-      setUser(JSON.parse(user));
-      setAuthenticated(true);
+      
+      // função anônima auto executavel para verificar se o token guardado ainda é valido
+      (async () => {
+        const response = await request(VERIFICAR_TOKEN(JSON.parse(token)));
+        console.log(response);
+        try {
+          if(response.statusText !== 'OK') {
+            console.log('token invalido!')
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            history.push('/login');
+          } else {
+            console.log('configurando API ...')
+            api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+            setUser(JSON.parse(user));
+            setAuthenticated(true);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+
+      })()
     }
 
     // ignora a autenticação para testes

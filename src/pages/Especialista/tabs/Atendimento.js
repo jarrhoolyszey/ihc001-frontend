@@ -15,8 +15,7 @@ const Atendimento = () => {
   if( paciente ) {
     return (
       <>
-        <h1>Atendimento</h1>
-        <CadastroPaciente />
+        <h1>Atendimento de {paciente.nome}</h1>
       </>
     )
   } else {

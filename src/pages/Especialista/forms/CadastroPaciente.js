@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -8,11 +8,14 @@ import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
 import Select from 'components/form/Select';
 
+import { Context } from 'context/PacienteContext';
+import { TabContext } from 'context/TabContext'; 
+
 import useForm from 'hooks/useForm';
 import useAxios from 'hooks/useAxios';
 
 import {
-  CADASTRAR_PACIENTE, LISTAR_PACIENTES,
+  CADASTRAR_PACIENTE,
 } from 'services/api'
 
 
@@ -43,7 +46,10 @@ const useStyles = makeStyles({
 
 
 const CadastroPaciente = () => {
-  const { loading, error, request } = useAxios();
+  const { paciente, selectPaciente } = useContext(Context);
+  const { tab, changeTab } = useContext(TabContext);
+
+  const { loading, request } = useAxios();
 
   const [sexo, setSexo] = useState('');
   const nome = useForm();
@@ -97,11 +103,15 @@ const CadastroPaciente = () => {
       senha: senha,
     }
 
+    // Envia a requisição de cadastro para o servidor e aguarda a resposta
     const config = (CADASTRAR_PACIENTE(dadosPaciente));
-
     const res = await request(config);
 
-    //set paciente to PacienteContext
+    // Insere o novo paciente no PacienteContext e redireciona para a guia de atendimento
+    if(res.statusText === 'OK') {
+      selectPaciente(res.data);
+      changeTab(1);
+    }
   }
   
   return (
@@ -159,7 +169,7 @@ const CadastroPaciente = () => {
             label="RG" 
             type="text"
             placeholder="00.000.000-0"
-            mask="99.999.999-99"
+            mask="99.999.999-9"
             maskChar=""
             variant={variant}
             size={size}
@@ -272,7 +282,7 @@ const CadastroPaciente = () => {
         </div>
 
         { loading ? 
-          <Button variant="contained" color="primary" type="submit">Cadastrando...</Button> :
+          <Button variant="contained" color="primary" type="submit" disabled>Cadastrando...</Button> :
           <Button variant="contained" color="primary" type="submit">Cadastrar</Button>
         }
       </form>

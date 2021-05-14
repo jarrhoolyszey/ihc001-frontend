@@ -4,6 +4,7 @@ import Header from 'components/Header';
 import VerticalTabs from './VerticalTabs';
 
 import { PacienteProvider } from 'context/PacienteContext';
+import { TabProvider } from 'context/TabContext';
 
 const Especialista = () => {
 
@@ -12,7 +13,9 @@ const Especialista = () => {
       <Header />
       
       <PacienteProvider>
-        <VerticalTabs />
+        <TabProvider>
+          <VerticalTabs />
+        </TabProvider>
       </PacienteProvider>
     </div>
   );

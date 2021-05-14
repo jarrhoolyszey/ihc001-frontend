@@ -15,6 +15,7 @@ import DadosPaciente from './tabs/DadosPaciente';
 import HistoricoPaciente from './tabs/HistoricoPaciente';
 
 import { Context } from 'context/PacienteContext';
+import { TabContext } from 'context/TabContext';
 
 import theme from 'themes/theme';
 
@@ -76,11 +77,13 @@ const a11yProps = (index) => {
 
 const VerticalTabs = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  //const [value, setValue] = React.useState(0);
   const { paciente } = useContext(Context);
+  const { tab, changeTab } = useContext(TabContext);
 
   const handleChange = (e, newValue) => {
-    setValue(newValue);
+    //setValue(newValue);
+    changeTab(newValue);
   };
 
   return (
@@ -89,7 +92,8 @@ const VerticalTabs = () => {
       <Sidebar>
         <Tabs
           orientation="vertical"
-          value={value}
+          //value={value}
+          value={tab}
           onChange={handleChange}
           className={classes.tabs}
         > 
@@ -102,16 +106,16 @@ const VerticalTabs = () => {
         </Tabs>
       </Sidebar>
 
-      <TabPanel className={classes.tabPanel} value={value} index={0}>
+      <TabPanel className={classes.tabPanel} value={tab} index={0}>
         <BuscarPaciente />
       </TabPanel>
-      <TabPanel className={classes.tabPanel} value={value} index={1}>
+      <TabPanel className={classes.tabPanel} value={tab} index={1}>
         <Atendimento />
       </TabPanel>
-      <TabPanel className={classes.tabPanel} value={value} index={2}>
+      <TabPanel className={classes.tabPanel} value={tab} index={2}>
         <DadosPaciente />
       </TabPanel>
-      <TabPanel className={classes.tabPanel} value={value} index={3}>
+      <TabPanel className={classes.tabPanel} value={tab} index={3}>
         <HistoricoPaciente />
       </TabPanel>
 
