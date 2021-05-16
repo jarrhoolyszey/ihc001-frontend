@@ -37,14 +37,22 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    overflowY: 'scroll',
 
-    '& .titulo': {
+    '& .titulo-wrapper': {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
       width: '100%',
       backgroundColor: theme.palette.primaryLight,
       color: theme.palette.primaryText,
       padding: '10px',
       marginBottom: '20px',
+
+      '& button': {
+        color: 'inherit',
+        borderColor: 'inherit',
+      }
     }
   },
 
@@ -71,6 +79,7 @@ const useStyles = makeStyles({
       width: '100%',
     }
   },
+
   formFields: {
     '& .form-row': {
       display: 'flex',
@@ -91,6 +100,7 @@ const useStyles = makeStyles({
 
   notasWrapper: {
     padding: '0px 20px',
+    overflow: 'scroll',
 
     '& .notas-footer': {
       display: 'flex',
@@ -181,33 +191,34 @@ const PacienteCard = () => {
 
   return (
     <Paper elevation={3} className={css.root}>
-      <Typography className="titulo" variant="subtitle2">DADOS PESSOAIS:</Typography>
+      <div  className="titulo-wrapper" >
+        <Typography className="titulo" variant="subtitle2">DADOS PESSOAIS:</Typography>
+        {
+          readOnly ?
+            <Button 
+              color="primary" 
+              variant="outlined"
+              onClick={handleEditar}
+              startIcon={<EditOutlined />}
+            >
+              Editar
+            </Button>
+            :
+            <Button
+              type="submit"
+              color="primary"
+              variant="outlined"
+              onClick={handleSalvar}
+              startIcon={<Save />}
+            >
+              { requesting ? 'Salvando...' : 'Salvar' }
+            </Button>  
+          }
+      </div>
       
       <div className={css.dadosPessoaisWrapper}>
         <div className={css.avatarWrapper}>
           <Avatar className="avatar" src={DefaultImage}/> 
-          {
-            readOnly ?
-              <Button 
-                color="primary" 
-                variant="outlined"
-                onClick={handleEditar}
-                startIcon={<EditOutlined />}
-              >
-                Editar
-              </Button>
-              :
-              <Button
-                type="submit"
-                color="primary"
-                variant="outlined"
-                onClick={handleSalvar}
-                startIcon={<Save />}
-              >
-                { requesting ? 'Salvando...' : 'Salvar' }
-              </Button>
-            
-          }      
         </div>
 
         <form className={css.formFields}>
@@ -357,12 +368,33 @@ const PacienteCard = () => {
           </div>
         </form>
       </div>
-
-      <Typography className="titulo" variant="subtitle2">NOTAS SOBRE {String(paciente.nome).toUpperCase()}:</Typography>   
+      
+      <div className="titulo-wrapper">
+        <Typography className="titulo" variant="subtitle2">NOTAS SOBRE {String(paciente.nome).toUpperCase()}:</Typography>   
+      
+        {
+          readOnly ?
+            <Button 
+              variant="outlined"
+              onClick={handleEditar}
+              startIcon={<EditOutlined />}
+            >
+              Editar
+            </Button>
+            :
+            <Button
+              variant="outlined"
+              onClick={handleSalvar}
+              startIcon={<Save />}
+            >
+              { requesting ? 'Salvando...' : 'Salvar' }
+            </Button>  
+          }
+      </div>
 
       <div className={css.notasWrapper}>
         
-        <CategoryField />
+        <CategoryField edit={!readOnly}/>
         
         <div className="notas-footer">
           <Button color="primary" variant="outlined">Nova Nota</Button>

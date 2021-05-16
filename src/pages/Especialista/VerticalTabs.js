@@ -49,7 +49,18 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'row',
-    flexGrow: 1,
+    overflow: 'hidden',
+    flex: '1',
+
+    '& .tabpanel-wrapper': {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: '1',
+      minHeight: '100%',
+      overflowY: 'scroll',
+      paddingBottom: '20px',
+    }
+    
   },
   tabs: {
     width: '100%',
@@ -60,8 +71,6 @@ const useStyles = makeStyles({
     }
   },
   tabPanel: {
-    flexGrow: 1,
-    overflowY: 'hidden',
     padding: '20px',
   }
 });
@@ -88,7 +97,6 @@ const VerticalTabs = () => {
 
   return (
     <div className={classes.root}>
-
       <Sidebar>
         <Tabs
           orientation="vertical"
@@ -106,19 +114,20 @@ const VerticalTabs = () => {
         </Tabs>
       </Sidebar>
 
-      <TabPanel className={classes.tabPanel} value={tab} index={0}>
-        <BuscarPaciente />
-      </TabPanel>
-      <TabPanel className={classes.tabPanel} value={tab} index={1}>
-        <Atendimento />
-      </TabPanel>
-      <TabPanel className={classes.tabPanel} value={tab} index={2}>
-        <DadosPaciente />
-      </TabPanel>
-      <TabPanel className={classes.tabPanel} value={tab} index={3}>
-        <HistoricoPaciente />
-      </TabPanel>
-
+      <div className="tabpanel-wrapper">
+        <TabPanel className={classes.tabPanel} value={tab} index={0}>
+          <BuscarPaciente />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={1}>
+          <Atendimento />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={2}>
+          <DadosPaciente />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={3}>
+          <HistoricoPaciente />
+        </TabPanel>
+      </div>
     </div>
   );
 }

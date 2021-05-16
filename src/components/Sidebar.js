@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     minWidth: '250px',
     maxWidth: '250px',
-    height: '100vh',
+    flex: '1',
     
     '& .avatar-wrapper': {
       display: 'flex',

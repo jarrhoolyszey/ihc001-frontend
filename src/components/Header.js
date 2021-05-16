@@ -14,7 +14,6 @@ import theme from 'themes/theme';
 const useStyles = makeStyles({
   root: {
     display: 'flex',
-    //justifyContent: 'flex-end',
     justifyContent: 'space-between',
     width: '100%',
     minHeight: '56px',

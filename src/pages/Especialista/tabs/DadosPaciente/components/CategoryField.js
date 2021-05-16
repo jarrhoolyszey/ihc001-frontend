@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 
 import {
-  EditOutlined,
   RemoveCircleOutline,
   AddCircleOutline,
 } from '@material-ui/icons';
@@ -210,20 +209,9 @@ const useStyles = makeStyles({
   }
 })
 
-const CategoryField = () => {
+const CategoryField = ({edit}) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const [edit, setEdit] = React.useState(false);
   const css = useStyles();
-
-
-  const handleEditButton = () => {    
-    if(!edit) {
-      setEdit(true);
-    } else {
-      setEdit(false);
-      console.log(state);
-    }
-  }
 
   const handleAddColumn = () => {
     dispatch({type: 'ADD_COLUMN'});
@@ -273,15 +261,7 @@ const CategoryField = () => {
         <Typography>
           <input value={state.title} onChange={handleTitleChange} readOnly={!edit} />
         </Typography> 
-        <Button 
-          className="edit-button" 
-          onClick={handleEditButton}
-          startIcon={<EditOutlined />}
-          variant="outlined"
-          size="small"
-        >
-          Editar
-        </Button>
+        
       </div>
       <div className={'itens-wrapper'}>
         <table className="category-table">
