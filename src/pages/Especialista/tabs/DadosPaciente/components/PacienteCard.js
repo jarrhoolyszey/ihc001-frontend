@@ -6,14 +6,23 @@ import { makeStyles } from '@material-ui/styles';
 import {
   Paper,
   Avatar,
-  Button
+  Button,
+  Typography,
 } from '@material-ui/core';
+
+import {
+  EditOutlined,
+  Save,
+} from '@material-ui/icons';
 
 import DefaultImage from 'imgs/default-profile-picture.png';
 
 import Select from 'components/form/Select';
 import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
+import CategoryField from './CategoryField';
+
+import theme from 'themes/theme';
 
 import { Context } from 'context/PacienteContext';
 
@@ -26,10 +35,26 @@ import {
 const useStyles = makeStyles({
   root: {
     display: 'flex',
-    flexDirection: 'row',
-    maxWidth: '800px',
-    padding: '30px 30px 20px 30px',
+    flexDirection: 'column',
+    width: '100%',
+    overflowY: 'scroll',
+
+    '& .titulo': {
+      width: '100%',
+      backgroundColor: theme.palette.primaryLight,
+      color: theme.palette.primaryText,
+      padding: '10px',
+      marginBottom: '20px',
+    }
   },
+
+  dadosPessoaisWrapper: {
+    display: 'flex',
+    flexDireciton: 'row',
+    padding: '0px 20px',
+    marginBottom: '20px',
+  },
+
   avatarWrapper: {
     marginRight: '30px',
     display: 'flex',
@@ -61,6 +86,16 @@ const useStyles = makeStyles({
 
     '& #numero, #estado': {
       maxWidth: '80px'
+    }
+  },
+
+  notasWrapper: {
+    padding: '0px 20px',
+
+    '& .notas-footer': {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      padding: '10px 0px',
     }
   }
 })
@@ -100,7 +135,6 @@ const PacienteCard = () => {
 
   const handleChange = ({target}) => {
     if(target.id === 'data_nascimento') {
-      console.log('formatou data')
       setForm({ ...form, [target.id]: formatDate(target.value)});
     } else {
       setForm({ ...form, [target.id]: target.value });
@@ -147,179 +181,194 @@ const PacienteCard = () => {
 
   return (
     <Paper elevation={3} className={css.root}>
-      <div className={css.avatarWrapper}>
-        <Avatar className="avatar" src={DefaultImage}/> 
-        {
-          readOnly ?
-            <Button 
-              color="primary" 
-              variant="outlined"
-              onClick={handleEditar}
-              content="Editar"
-            >
-              Editar
-            </Button>
-            :
-            <Button
-              type="submit"
-              color="primary"
-              variant="outlined"
-              onClick={handleSalvar}
-            >
-              { requesting ? 'Salvando...' : 'Salvar' }
-            </Button>
-          
-        }      
+      <Typography className="titulo" variant="subtitle2">DADOS PESSOAIS:</Typography>
+      
+      <div className={css.dadosPessoaisWrapper}>
+        <div className={css.avatarWrapper}>
+          <Avatar className="avatar" src={DefaultImage}/> 
+          {
+            readOnly ?
+              <Button 
+                color="primary" 
+                variant="outlined"
+                onClick={handleEditar}
+                startIcon={<EditOutlined />}
+              >
+                Editar
+              </Button>
+              :
+              <Button
+                type="submit"
+                color="primary"
+                variant="outlined"
+                onClick={handleSalvar}
+                startIcon={<Save />}
+              >
+                { requesting ? 'Salvando...' : 'Salvar' }
+              </Button>
+            
+          }      
+        </div>
+
+        <form className={css.formFields}>
+          <div className={'form-row'}>
+            <Input 
+              id="nome"
+              label='Nome'
+              value={form.nome}
+              onChange={handleChange}
+              variant={variant}
+              InputProps={{ readOnly, }}
+            />
+            <Input
+              className="grow"
+              id="sobrenome"
+              label='Sobrenome'
+              value={form.sobrenome}
+              onChange={handleChange}
+              variant={variant}
+              InputProps={{ readOnly, }}
+            />
+          </div>
+          <div className={'form-row'}>
+            <Select 
+              id="sexo"
+              label="Sexo"
+              options={['Masculino', 'Feminino']}
+              value={sexo}
+              onChange={({target}) => setSexo(target.value)}
+              variant={variant}
+              InputProps={{ readOnly }}
+            />
+            <MaskedInput
+              id="CPF"
+              label="CPF"
+              value={form.CPF}
+              mask="999.999.999-99"
+              variant={variant}
+              InputProps={{readOnly}}
+              required
+            />
+            <MaskedInput
+              id="RG"
+              label="RG"
+              value={form.RG}
+              mask="99.999.999-9"
+              variant={variant}
+              InputProps={{readOnly}}
+            />
+          </div>
+          <div className={'form-row'}>
+            <Input
+              className="grow"
+              id="data_nascimento"
+              label='Nascimento'
+              type="date"
+              value={form.data_nascimento}
+              onChange={handleChange}
+              InputProps={{ readOnly }}
+              variant={variant}
+            />
+            <MaskedInput 
+              id="telefone"
+              label="Telefone"
+              value={form.telefone}
+              onChange={handleChange}
+              placeholder="(00) 0000-0000"
+              mask="(99) 9999-9999"
+              maskChar=""
+              InputProps={{ readOnly }}
+              variant={variant}
+            />
+            <Input 
+              id="email"
+              label="Email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="exemplo@email.com"
+              InputProps={{ readOnly }}
+              variant={variant}
+              required
+            />
+          </div>
+          <div className={'form-row'}>
+            <Input 
+              id="logradouro"
+              label="Logradouro"
+              value={form.logradouro}
+              onChange={handleChange}
+              variant={variant}
+              InputProps={{ readOnly }}
+            />
+            <Input 
+              id="numero"
+              label="Número"
+              type="number"
+              value={form.numero}
+              onChange={handleChange}
+              variant={variant}
+              InputProps={{ readOnly }}
+            />
+            <Input 
+              id="complemento"
+              label="Complemento"
+              value={form.complemento}
+              onChange={handleChange}
+              InputProps={{ readOnly }}
+              variant={variant}
+            />
+          </div>
+          <div className={'form-row'}>
+            <Input 
+              id="bairro"
+              label="Bairro"
+              value={form.bairro}
+              onChange={handleChange}
+              InputProps={{ readOnly }}
+              variant={variant}
+            />
+            <MaskedInput 
+              id="cep"
+              label="CEP"
+              placeholder="00000-000"
+              mask="99999-999"
+              maskChar=""
+              value={form.cep}
+              onChange={handleChange}
+              InputProps={{ readOnly }}
+              variant={variant}
+            />
+            <Input 
+              id="cidade"
+              label="Cidade"
+              value={form.cidade}
+              onChange={handleChange}
+              InputProps={{ readOnly }}
+              variant={variant}
+            />
+            <Input 
+              id="estado"
+              label="Estado"
+              value={form.estado}
+              onChange={handleChange}
+              InputProps={{ readOnly }}
+              variant={variant}
+            />
+          </div>
+        </form>
       </div>
 
-      <form className={css.formFields}>
-        <div className={'form-row'}>
-          <Input 
-            id="nome"
-            label='Nome'
-            value={form.nome}
-            onChange={handleChange}
-            variant={variant}
-            InputProps={{ readOnly, }}
-          />
-          <Input
-            className="grow"
-            id="sobrenome"
-            label='Sobrenome'
-            value={form.sobrenome}
-            onChange={handleChange}
-            variant={variant}
-            InputProps={{ readOnly, }}
-          />
+      <Typography className="titulo" variant="subtitle2">NOTAS SOBRE {String(paciente.nome).toUpperCase()}:</Typography>   
+
+      <div className={css.notasWrapper}>
+        
+        <CategoryField />
+        
+        <div className="notas-footer">
+          <Button color="primary" variant="outlined">Nova Nota</Button>
         </div>
-        <div className={'form-row'}>
-          {/*TODO: Concertar handleChange*/}
-          <Select 
-            id="sexo"
-            label="Sexo"
-            options={['Masculino', 'Feminino']}
-            value={sexo}
-            onChange={({target}) => setSexo(target.value)}
-            variant={variant}
-            InputProps={{ readOnly }}
-          />
-          <MaskedInput
-            id="CPF"
-            label="CPF"
-            value={form.CPF}
-            mask="999.999.999-99"
-            variant={variant}
-            InputProps={{readOnly}}
-            required
-          />
-          <MaskedInput
-            id="RG"
-            label="RG"
-            value={form.RG}
-            mask="99.999.999-9"
-            variant={variant}
-            InputProps={{readOnly}}
-          />
-        </div>
-        <div className={'form-row'}>
-          <Input
-            className="grow"
-            id="data_nascimento"
-            label='Nascimento'
-            type="date"
-            value={form.data_nascimento}
-            onChange={handleChange}
-            InputProps={{ readOnly }}
-            variant={variant}
-          />
-          <MaskedInput 
-            id="telefone"
-            label="Telefone"
-            value={form.telefone}
-            onChange={handleChange}
-            placeholder="(00) 0000-0000"
-            mask="(99) 9999-9999"
-            maskChar=""
-            InputProps={{ readOnly }}
-            variant={variant}
-          />
-          <Input 
-            id="email"
-            label="Email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="exemplo@email.com"
-            InputProps={{ readOnly }}
-            variant={variant}
-            required
-          />
-        </div>
-        <div className={'form-row'}>
-          <Input 
-            id="logradouro"
-            label="Logradouro"
-            value={form.logradouro}
-            onChange={handleChange}
-            variant={variant}
-            InputProps={{ readOnly }}
-          />
-          <Input 
-            id="numero"
-            label="Número"
-            type="number"
-            value={form.numero}
-            onChange={handleChange}
-            variant={variant}
-            InputProps={{ readOnly }}
-          />
-          <Input 
-            id="complemento"
-            label="Complemento"
-            value={form.complemento}
-            onChange={handleChange}
-            InputProps={{ readOnly }}
-            variant={variant}
-          />
-        </div>
-        <div className={'form-row'}>
-          <Input 
-            id="bairro"
-            label="Bairro"
-            value={form.bairro}
-            onChange={handleChange}
-            InputProps={{ readOnly }}
-            variant={variant}
-          />
-          <MaskedInput 
-            id="cep"
-            label="CEP"
-            placeholder="00000-000"
-            mask="99999-999"
-            maskChar=""
-            value={form.cep}
-            onChange={handleChange}
-            InputProps={{ readOnly }}
-            variant={variant}
-          />
-          <Input 
-            id="cidade"
-            label="Cidade"
-            value={form.cidade}
-            onChange={handleChange}
-            InputProps={{ readOnly }}
-            variant={variant}
-          />
-          <Input 
-            id="estado"
-            label="Estado"
-            value={form.estado}
-            onChange={handleChange}
-            InputProps={{ readOnly }}
-            variant={variant}
-          />
-        </div>
-      </form>      
-      
+      </div>
+            
     </Paper>
   )
 }

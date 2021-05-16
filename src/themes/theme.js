@@ -9,8 +9,8 @@ const theme = {
     secondaryDark: '#ba000d',
     secondaryText: '#000000',
     tertiary: '#37197c',
-    
-  }
+  },
+  boxShadow: '0px 1px 5px 2px rgba(0,0,0,.25)',
 };
 
 export default theme;

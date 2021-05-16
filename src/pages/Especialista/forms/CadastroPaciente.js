@@ -56,7 +56,7 @@ const CadastroPaciente = () => {
   const sobrenome = useForm(false);
   const CPF = useForm('cpf');
   const RG = useForm('rg');
-  const nascimento = useForm('data');
+  const nascimento = useForm();
   const telefone = useForm('telefone');
   const logradouro = useForm();
   const numero = useForm('numero');
@@ -178,13 +178,10 @@ const CadastroPaciente = () => {
           />
         </div>
         <div className="form-row">
-          <MaskedInput 
+          <Input 
             id="nascimento" 
             label="Nascimento" 
-            type="text"
-            placeholder="DD/MM/YYYY"
-            mask="99/99/9999"
-            maskChar=""
+            type="date"
             variant={variant}
             size={size}
             {...nascimento}

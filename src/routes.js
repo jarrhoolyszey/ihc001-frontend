@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 import Especialista from './pages/Especialista';
 import Paciente from './pages/Paciente';
 
+import TesteReducer from 'components/TesteReducer';
 
 function CustomRoute({ isPrivate, role, ...rest }) {
   const { loading, authenticated } = useContext(Context);
@@ -33,6 +34,7 @@ export default function Routes() {
       <CustomRoute isPrivate role="paciente" exact path="/paciente" component={ Paciente } />
       <CustomRoute isPrivate role="especialista" exact path="/especialista" component={ Especialista } />
       <CustomRoute isPrivate role="admin" exact path="/admin" component={ Admin } />
+      <Route path="/teste" component={ TesteReducer } />
     </Switch>
   )
 }
