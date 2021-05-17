@@ -6,9 +6,9 @@ import Header from 'components/Header';
 import VerticalTabs from './VerticalTabs';
 import Footer from 'components/Footer';
 
-import { PacienteProvider } from 'context/PacienteContext';
+//import { PacienteProvider } from 'context/PacienteContext';
 import { TabProvider } from 'context/TabContext';
-
+import { PacienteProvider } from 'context/PacienteCtx';
 
 const useStyles = makeStyles({
   pageWrapper: {

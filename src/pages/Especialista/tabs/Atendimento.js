@@ -1,21 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import {
 
 } from '@material-ui/core';
 
-import { Context } from 'context/PacienteContext';
-
-import CadastroPaciente from '../forms/CadastroPaciente';
+import { PacienteContext } from 'context/PacienteCtx';
 
 
 const Atendimento = () => {
-  const { paciente } = useContext(Context);
+  const { pacienteState } = React.useContext(PacienteContext);
 
-  if( paciente ) {
+  if( pacienteState.nome !== '' ) {
     return (
       <>
-        <h1>Atendimento de {paciente.nome}</h1>
+        <h1>Atendimento de {pacienteState.nome}</h1>
       </>
     )
   } else {

@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 
 import {
   Typography, 
 } from '@material-ui/core';
 
-import { Context } from 'context/PacienteContext';
-import { TabContext } from 'context/TabContext';
 
 import BuscarPacienteForm from '../forms/BuscarPacienteForm';
 import AlertDialog from 'components/AlertDialog';
@@ -13,9 +11,8 @@ import CadastroPaciente from '../forms/CadastroPaciente';
 
 
 const BuscarPaciente = () => {
-  const { paciente } = useContext(Context);
-  const [open, setOpen] = useState(false);          // dialog box display
-  const [showForm, setShowForm] = useState(false);  // CadastroPaciente form display control
+  const [open, setOpen] = React.useState(false);          // dialog box display
+  const [showForm, setShowForm] = React.useState(false);  // CadastroPaciente form display control
 
 
   const toggleDialog = () => {
@@ -38,7 +35,9 @@ const BuscarPaciente = () => {
   if(!showForm) {
     return (
       <>
+        
         <BuscarPacienteForm toggleDialog={toggleDialog} />
+
         <AlertDialog
             open={open}
             okText={'Cadastrar'}

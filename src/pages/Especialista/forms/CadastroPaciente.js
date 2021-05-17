@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -8,7 +8,7 @@ import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
 import Select from 'components/form/Select';
 
-import { Context } from 'context/PacienteContext';
+import { PacienteContext } from 'context/PacienteCtx';
 import { TabContext } from 'context/TabContext'; 
 
 import useForm from 'hooks/useForm';
@@ -46,12 +46,13 @@ const useStyles = makeStyles({
 
 
 const CadastroPaciente = () => {
-  const { paciente, selectPaciente } = useContext(Context);
-  const { tab, changeTab } = useContext(TabContext);
+  const { changeTab } = React.useContext(TabContext);
+  const { pacienteState, pacienteDispatch } = React.useContext(PacienteContext);
 
   const { loading, request } = useAxios();
 
-  const [sexo, setSexo] = useState('');
+  // form fields
+  const [sexo, setSexo] = React.useState('');
   const nome = useForm();
   const sobrenome = useForm(false);
   const CPF = useForm('cpf');
@@ -109,7 +110,13 @@ const CadastroPaciente = () => {
 
     // Insere o novo paciente no PacienteContext e redireciona para a guia de atendimento
     if(res.statusText === 'OK') {
-      selectPaciente(res.data);
+      //selectPaciente(res.data);
+      const paciente = res.data;
+
+      pacienteDispatch({type: 'SELECIONAR_PACIENTE', payload: {
+        paciente,
+      }});
+      
       changeTab(1);
     }
   }

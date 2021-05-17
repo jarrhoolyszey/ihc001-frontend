@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -15,7 +15,9 @@ import DefaultImage from 'imgs/default-profile-picture.png';
 import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
 
-import { Context } from 'context/PacienteContext';
+
+//import { Context } from 'context/PacienteContext';
+import { PacienteContext } from 'context/PacienteCtx';
 import { TabContext } from 'context/TabContext';
 
 import useForm from 'hooks/useForm';
@@ -63,15 +65,14 @@ const useStyles = makeStyles({
 })
 
 
-const BuscarPacienteForm = (props) => {
-  const { selectPaciente } = useContext(Context);
-  const { tab, changeTab } = useContext(TabContext);
-  const css = useStyles();
+const BuscarPacienteForm = ({ toggleDialog }) => {
+  const { pacienteDispatch } = React.useContext(PacienteContext);
+  const { changeTab } = React.useContext(TabContext);
+  const [resultado, setResultado] = React.useState([]);
   const { requesting, request } = useAxios();
   const CPF = useForm();
   const email = useForm();
-  const [resultado, setResultado] = useState([]);
-  const { toggleDialog } = props;
+  const css = useStyles();
 
 
   const handleSubmit = async (e) => {
@@ -92,7 +93,7 @@ const BuscarPacienteForm = (props) => {
   }
 
   const handleSelectClick = (paciente) => {
-    selectPaciente(paciente);
+    pacienteDispatch({type: 'SELECIONAR_PACIENTE', payload: { paciente } })
     changeTab(1); // tab de atendimento
   }
 

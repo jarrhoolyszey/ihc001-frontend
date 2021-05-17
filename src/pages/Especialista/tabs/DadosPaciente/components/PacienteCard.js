@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 
 import { makeStyles } from '@material-ui/styles';
@@ -24,7 +24,7 @@ import CategoryField from './CategoryField';
 
 import theme from 'themes/theme';
 
-import { Context } from 'context/PacienteContext';
+import { PacienteContext } from 'context/PacienteCtx';
 
 import useAxios from 'hooks/useAxios';
 import {
@@ -115,32 +115,32 @@ const formatDate = (date) => {
 }
 
 const PacienteCard = () => {
-  const { paciente, selectPaciente } = useContext(Context);
+  const { pacienteState, pacienteDispatch } = React.useContext(PacienteContext);
   const { requesting, request } = useAxios();
   const css = useStyles();
 
   // form controls
-  const [readOnly, setReadOnly] = useState(true);
+  const [readOnly, setReadOnly] = React.useState(true);
   const variant = 'filled';
 
   // form fields
-  const [sexo, setSexo] = useState(paciente.sexo);
-  const [form, setForm] = useState({
-    nome: paciente.nome,
-    sobrenome: paciente.sobrenome,
-    email: paciente.email,
-    CPF: paciente.CPF,
-    RG: paciente.RG,
-    data_nascimento: formatDate(paciente.data_nascimento),
-    telefone: paciente.telefone,
+  const [sexo, setSexo] = React.useState(pacienteState.sexo);
+  const [form, setForm] = React.useState({
+    nome: pacienteState.nome,
+    sobrenome: pacienteState.sobrenome,
+    email: pacienteState.email,
+    CPF: pacienteState.CPF,
+    RG: pacienteState.RG,
+    data_nascimento: formatDate(pacienteState.data_nascimento),
+    telefone: pacienteState.telefone,
     
-    logradouro: paciente.endereco.logradouro,
-    numero: paciente.endereco.numero,
-    complemento: paciente.endereco.complemento,
-    cep: paciente.endereco.cep,
-    estado: paciente.endereco.estado,
-    cidade: paciente.endereco.cidade,
-    bairro: paciente.endereco.bairro, 
+    logradouro: pacienteState.endereco.logradouro,
+    numero: pacienteState.endereco.numero,
+    complemento: pacienteState.endereco.complemento,
+    cep: pacienteState.endereco.cep,
+    estado: pacienteState.endereco.estado,
+    cidade: pacienteState.endereco.cidade,
+    bairro: pacienteState.endereco.bairro, 
   })
 
   const handleChange = ({target}) => {
@@ -160,31 +160,33 @@ const PacienteCard = () => {
     handleSubmit();
   }
 
-  const handleSubmit = async () => {
-    const body = {
-      nome: form.nome,
-      sobrenome: form.sobrenome,
-      sexo: sexo,
-      email: form.email,
-      CPF: form.CPF,
-      RG: form.RG,
-      data_nascimento: form.data_nascimento,
-      telefone: form.telefone,
-      endereco: {
-        logradouro: form.logradouro,
-        numero: form.numero,
-        complemento: form.complemento,
-        cep: form.cep,
-        estado: form.estado,
-        cidade: form.cidade,
-        bairro: form.bairro, 
-      },
-    }
+  const handleAddCategory = () => {
+    pacienteDispatch({type: 'ADD_CATEGORIA'});
+  }
 
-    const res = await request( ATUALIZAR_PACIENTE(paciente._id, body) );
+  const handleSubmit = async () => {
+    let body = pacienteState;
+    
+    body.nome = form.nome;
+    body.sobrenome = form.sobrenome;
+    body.sexo = sexo;
+    body.email = form.email;
+    body.CPF = form.CPF;
+    body.RG = form.RG;
+    body.data_nascimento = form.data_nascimento;
+    body.telefone = form.telefone;
+    body.endereco.logradouro = form.logradouro;
+    body.endereco.numero = form.numero;
+    body.endereco.complemento = form.complemento;
+    body.endereco.cep = form.cep;
+    body.endereco.estado = form.estado;
+    body.endereco.cidade = form.cidade;
+    body.endereco.bairro = form.bairro; 
+
+    const res = await request( ATUALIZAR_PACIENTE(pacienteState._id, body) );
     
     if(res.statusText === 'OK') {
-      selectPaciente(res.data)
+      console.log(res.data);
     }
   }
 
@@ -370,7 +372,7 @@ const PacienteCard = () => {
       </div>
       
       <div className="titulo-wrapper">
-        <Typography className="titulo" variant="subtitle2">NOTAS SOBRE {String(paciente.nome).toUpperCase()}:</Typography>   
+        <Typography className="titulo" variant="subtitle2">CATEGORIAS DE {String(pacienteState.nome).toUpperCase()}:</Typography>   
       
         {
           readOnly ?
@@ -394,10 +396,29 @@ const PacienteCard = () => {
 
       <div className={css.notasWrapper}>
         
-        <CategoryField edit={!readOnly}/>
+        { 
+          (pacienteState.categorias.length === 0) ?
+          
+          (<p>{'Sem nenhuma nota cadastrada =('}</p>) :
+          
+          pacienteState.categorias.map((categoria) => (
+            <CategoryField  
+              category={categoria} 
+              edit={!readOnly}  
+              id={categoria.id}
+              key={categoria.id}
+            />
+          ))
+        }
         
         <div className="notas-footer">
-          <Button color="primary" variant="outlined">Nova Nota</Button>
+          <Button 
+            color="primary" 
+            variant="outlined"
+            onClick={handleAddCategory}
+          >
+            Nova Categoria
+          </Button>
         </div>
       </div>
             

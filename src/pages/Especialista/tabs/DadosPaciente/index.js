@@ -1,22 +1,17 @@
-import React, { useContext } from 'react';
-
-import {
-
-} from '@material-ui/core';
+import React from 'react';
 
 import PacienteCard from './components/PacienteCard';
 
-import { Context } from 'context/PacienteContext';
+//import { Context } from 'context/PacienteContext';
+import { PacienteContext } from 'context/PacienteCtx';
+
+
 
 const DadosPaciente = () => {
-  const { paciente } = useContext(Context);
-  
-  if( paciente ) {
-    return (
-      <>
-        <PacienteCard paciente={paciente} />
-      </>
-    )
+  const { pacienteState } = React.useContext(PacienteContext);
+
+  if( pacienteState.nome !== '' ) {
+    return <PacienteCard />
   } else {
     return <h1>{'Sem paciente no momento =('}</h1>
   }

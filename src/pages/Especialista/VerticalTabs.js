@@ -14,8 +14,9 @@ import Atendimento from './tabs/Atendimento';
 import DadosPaciente from './tabs/DadosPaciente';
 import HistoricoPaciente from './tabs/HistoricoPaciente';
 
-import { Context } from 'context/PacienteContext';
+// import { Context } from 'context/PacienteContext';
 import { TabContext } from 'context/TabContext';
+import { PacienteContext } from 'context/PacienteCtx';
 
 import theme from 'themes/theme';
 
@@ -87,7 +88,8 @@ const a11yProps = (index) => {
 const VerticalTabs = () => {
   const classes = useStyles();
   //const [value, setValue] = React.useState(0);
-  const { paciente } = useContext(Context);
+  //const { paciente } = useContext(Context);
+  const { pacienteState } = useContext(PacienteContext);
   const { tab, changeTab } = useContext(TabContext);
 
   const handleChange = (e, newValue) => {

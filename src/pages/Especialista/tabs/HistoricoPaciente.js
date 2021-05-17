@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
-import {
-
-} from '@material-ui/core';
-
-import { Context } from 'context/PacienteContext';
+import { PacienteContext } from 'context/PacienteCtx';
 
 
 const useStyles = makeStyles({
@@ -16,14 +12,14 @@ const useStyles = makeStyles({
   }
 });
 
-const HistoricoPaciente = (props) => {
+const HistoricoPaciente = () => {
+  const { pacienteState } = React.useContext(PacienteContext);
   const css = useStyles();
-  const { paciente } = useContext(Context);
-
-  if(paciente) {
+  
+  if(pacienteState.name !== '') {
     return (
       <div className={css.root}>
-        <h1>Historico do Paciente: {paciente.nome}</h1>
+        <h1>Historico do Paciente: {pacienteState.nome}</h1>
       </div>
     )
   } else {

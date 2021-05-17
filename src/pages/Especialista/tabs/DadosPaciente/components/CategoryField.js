@@ -13,92 +13,9 @@ import {
   AddCircleOutline,
 } from '@material-ui/icons';
 
+import { PacienteContext } from 'context/PacienteCtx'; 
 
 import theme from 'themes/theme';
-
-
-
-// useReducer ... 
-const initialState = {
-  title: "Titulo",
-  columns: ['Coluna 1', 'Coluna 2'],
-  rows: [
-    ['(1, 1)', '(1,2)'],
-    ['(2, 1)', '(2,2)']
-  ]
-}
-
-function reducer(state, action) {
-  const { type, payload } = action;
-  
-  if(type === 'UPDATE_TITLE') {
-    return { ...state, title: payload.value };
-  }
-  if(type === 'UPDATE_HEADER') {
-    let newColumns = state.columns.slice();
-    newColumns.splice(payload.col, 1, payload.value);
-
-    return { ...state, columns: newColumns };
-  }
-  if(type === 'ADD_ROW') { 
-    let newRows = state.rows.slice();
-    let newLine = [];
-
-    for(let i=0; i<state.columns.length; i++)
-      newLine[i] = '';
-
-    newRows.push(newLine);
-
-    return { ...state, rows: newRows };
-  }
-  if(type === 'DELETE_ROW') {
-    let newRows = state.rows.slice();
-    newRows.splice(payload.row, 1);
-
-    return { ...state, rows: newRows };
-  }
-  if(type === 'UPDATE_ROW') {
-    const row = action.payload.row;
-    const col = action.payload.col;
-    const value = action.payload.value;
-
-    let newRows = state.rows.slice();
-    newRows[row].splice(col, 1, value);
-
-    return { ...state, rows: newRows };
-  }
-  if(type === 'DELETE_COLUMN') {
-    let newColumns = state.columns.slice();
-    newColumns.splice(payload.col, 1);
-
-    let newRows = state.rows.slice();
-    newRows.forEach(arr => {
-      arr.splice(payload.col, 1);
-      
-      if(arr.length === 0)
-        arr = null;
-      
-    })
-
-    if(newColumns.length === 0) {
-      newRows = [];
-    }
-
-    return { ...state, columns: newColumns, rows: newRows };
-  } 
-  if(type === 'ADD_COLUMN') {
-    let newColumns = state.columns.slice();
-    newColumns.push('');
-
-    let newRows = state.rows.slice();
-    newRows.forEach(arr => {
-      arr.push('');
-    })
-    
-    return { ...state, columns: newColumns, rows: newRows };
-  }
-}
-
 
 
 const useStyles = makeStyles({
@@ -107,6 +24,7 @@ const useStyles = makeStyles({
     boxShadow: theme.boxShadow,
     borderRadius: '5px',
     overflow: 'hidden',
+    marginBottom: '20px',
 
     '& .header': {
       display: 'flex',
@@ -127,11 +45,6 @@ const useStyles = makeStyles({
         border: 'none',
         outline: 'none',
       },
-
-      '& button': {
-        color: 'white',
-        borderColor: 'white',
-      }
     },
 
     '& .itens-wrapper': {
@@ -209,46 +122,51 @@ const useStyles = makeStyles({
   }
 })
 
-const CategoryField = ({edit}) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+const CategoryField = ({category, edit, id}) => {
+  const { pacienteDispatch } = React.useContext(PacienteContext);
   const css = useStyles();
 
+  const handleDeleteCategory = () => {
+    pacienteDispatch({type: 'DEL_CATEGORIA', payload: { id }});
+  }
+
   const handleAddColumn = () => {
-    dispatch({type: 'ADD_COLUMN'});
+    pacienteDispatch({type: 'ADD_COLUNA', payload: { id }});
   }
 
   const handleDeleteColumn = ({target}) => {
-    dispatch({type: 'DELETE_COLUMN', payload: {
-      col: target.closest('th').getAttribute('col'),
+    pacienteDispatch({type: 'DEL_COLUNA', payload: {
+      id, col: target.closest('th').getAttribute('col'),
     }});
   }
 
   const handleAddRow = () => {
-    dispatch({type: 'ADD_ROW'});
+    pacienteDispatch({type: 'ADD_LINHA', payload: { id }});
   }
 
   const handleDeleteRow = ({target}) => {
-    dispatch({type: 'DELETE_ROW', payload: {
-      row: target.closest('tr').getAttribute('row'),
+    pacienteDispatch({type: 'DEL_LINHA', payload: {
+      id, row: target.closest('tr').getAttribute('row'),
     }});
   }
 
-  
   const handleTitleChange = ({target}) => {
-    dispatch({type: 'UPDATE_TITLE', payload: {
-      value: target.value,
+    pacienteDispatch({type: 'UPDATE_TITULO', payload: {
+      id, value: target.value,
     }});
   }
   
   const handleHeaderChange = ({target}) => {
-    dispatch({type: 'UPDATE_HEADER', payload: {
+    pacienteDispatch({type: 'UPDATE_HEADER', payload: {
+      id,
       col: target.closest('th').getAttribute('col'),
       value: target.value,
     }})
   }
 
   const handleChange = ({target}) => {
-    dispatch({type: 'UPDATE_ROW', payload: {
+    pacienteDispatch({type: 'UPDATE_ITEM', payload: {
+      id,
       col: target.getAttribute('col'),
       row: target.getAttribute('row'),
       value: target.value,
@@ -259,20 +177,31 @@ const CategoryField = ({edit}) => {
     <div className={css.root}>
       <div className="header">
         <Typography>
-          <input value={state.title} onChange={handleTitleChange} readOnly={!edit} />
+          <input value={category.title} onChange={handleTitleChange} readOnly={!edit} />
         </Typography> 
-        
+        { 
+          edit &&
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<RemoveCircleOutline />}
+            color="secondary"
+            onClick={handleDeleteCategory}
+          >
+            Deletar
+          </Button>
+        }
       </div>
       <div className={'itens-wrapper'}>
         <table className="category-table">
           <thead className="table-header-wrapper">
             <tr>
               {
-                state.columns.map((header, index) => (
+                category.columns.map((header, index) => (
                   <th key={`th-${index}`} col={index}>
                     <div className={'th-content-wrapper'}>
                       <input 
-                        value={state.columns[index]} 
+                        value={category.columns[index]} 
                         onChange={handleHeaderChange} 
                         readOnly={!edit}
                         autoComplete="off" 
@@ -286,14 +215,14 @@ const CategoryField = ({edit}) => {
             </tr>
           </thead>
           <tbody className="table-body-wrapper">
-            {state.rows.map((row, rowIndex) => (
+            {category.rows.map((row, rowIndex) => (
               <tr key={`row-${rowIndex}`} row={rowIndex}>
                 {
                   row.map((cell, cellIndex) => (
                     <td key={`cell-${rowIndex}-${cellIndex}`}>
                       <input
                         id={`input-${rowIndex}-${cellIndex}`}
-                        value={state.rows[rowIndex][cellIndex]} 
+                        value={category.rows[rowIndex][cellIndex]} 
                         onChange={handleChange}
                         readOnly={!edit}
                         autoComplete="off"
