@@ -2,7 +2,6 @@ import React from 'react';
 
 import PacienteCard from './components/PacienteCard';
 
-//import { Context } from 'context/PacienteContext';
 import { PacienteContext } from 'context/PacienteCtx';
 
 

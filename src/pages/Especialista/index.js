@@ -9,6 +9,7 @@ import Footer from 'components/Footer';
 //import { PacienteProvider } from 'context/PacienteContext';
 import { TabProvider } from 'context/TabContext';
 import { PacienteProvider } from 'context/PacienteCtx';
+import { AtendimentoProvider } from 'context/AtendimentoCtx';
 
 const useStyles = makeStyles({
   pageWrapper: {
@@ -27,7 +28,9 @@ const Especialista = () => {
       
       <PacienteProvider>
         <TabProvider>
-          <VerticalTabs />
+          <AtendimentoProvider>
+            <VerticalTabs />
+          </AtendimentoProvider>
         </TabProvider>
       </PacienteProvider>
     

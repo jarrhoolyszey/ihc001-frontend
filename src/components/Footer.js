@@ -8,6 +8,11 @@ const useStyles = makeStyles({
   root: {
     height: '30px',
     backgroundColor: theme.palette.primary,
+    color: 'white',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
@@ -17,7 +22,7 @@ const Footer = () => {
 
   return (
     <div className={css.root}>
-      Footer
+      <p>{'Prontuário Eletrônico do Paciente - PEP Medic'}</p>
     </div>
   )
 }
