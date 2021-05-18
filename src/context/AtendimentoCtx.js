@@ -10,6 +10,7 @@ const initialState = {
   sintomas: [],
   exames:[],
   prescricoes: [],
+  diagnostico: '',
   // Exemplo: item do exames
   // exames: {
   //   tipo: 'Raio-X',
