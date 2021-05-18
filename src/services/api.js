@@ -8,6 +8,7 @@ const api = axios.create({
 
 const PACIENTES_URL = 'pacientes';
 const AUTH_URL = 'auth';
+const ATENDIMENTOS_URL = 'atendimentos';
 
 
 
@@ -52,6 +53,22 @@ export function ATUALIZAR_PACIENTE(id, dadosPaciente) {
     method: 'put',
     url: `${PACIENTES_URL}/${id}`,
     data: dadosPaciente
+  }
+}
+
+/*********************  Requests for '/atendimentos' ****************************/
+export function CADASTRAR_ATENDIMENTO(dadosAtendimento) {
+  return {
+    method: 'post',
+    url: `${ATENDIMENTOS_URL}`,
+    data: dadosAtendimento,
+  }
+}
+
+export function BUSCAR_ATENDIMENTOS_DO_PACIENTE(id_paciente) {
+  return {
+    method: 'get',
+    url: `${ATENDIMENTOS_URL}/${id_paciente}`,
   }
 }
 

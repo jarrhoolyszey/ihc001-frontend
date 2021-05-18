@@ -35,7 +35,6 @@ const BuscarPaciente = () => {
   if(!showForm) {
     return (
       <>
-        
         <BuscarPacienteForm toggleDialog={toggleDialog} />
 
         <AlertDialog

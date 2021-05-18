@@ -51,6 +51,9 @@ const reducer = (state, action) => {
   if(type === 'SELECIONAR_PACIENTE') {
     return payload.paciente;
   }
+  if(type === 'UNSELECT_PACIENTE') {
+    return initialState;
+  }
 
   /******************** CRUD CATEGORIAS ********************/
   if(type === 'ADD_CATEGORIA') {

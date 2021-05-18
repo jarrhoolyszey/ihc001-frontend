@@ -6,8 +6,27 @@ import { Context } from 'context/AuthContext';
 
 const AtendimentoCtx = React.createContext();
 
+const initialState = {
+  sintomas: [],
+  exames:[],
+  prescricoes: [],
+  // Exemplo: item do exames
+  // exames: {
+  //   tipo: 'Raio-X',
+  //   estado: 'Concluido',
+  //   resultado: 'Osso do dedinho do pé quebrado',
+  // },
+};
+
 const reducer = (state, action) => {
   const { type, payload } = action;
+
+  if(type === 'SELECT_ATENDIMENTO') {
+    return payload.atendimento;
+  }
+  if(type === 'UNSELECT_ATENDIMENTO') {
+    return initialState;
+  }
 
   /******************** CRUD SINTOMAS ********************/
   if(type === 'ADD_SINTOMA') {
@@ -73,24 +92,22 @@ const reducer = (state, action) => {
 function AtendimentoProvider({children}) {
   const { pacienteState } =  React.useContext(PacienteContext);
   const { user } = React.useContext(Context);
-  const initialState = {
-    sintomas: [],
-    exames:[],
-    prescricoes: [],
-    // Exemplo: item do exames
-    // exames: {
-    //   tipo: 'Raio-X',
-    //   estado: 'Concluido',
-    //   resultado: 'Osso do dedinho do pé quebrado',
-    // },
-  };
-
   const [ state, dispatch ] = React.useReducer(reducer, initialState);
+
+
+  const getAtendimentoData = () => {
+    return {
+      especialistaId: user._id,
+      pacienteId: pacienteState._id,
+      ...state, 
+    }
+  }
 
   return (
     <AtendimentoCtx.Provider value={{
       atendimentoState: state,
       atendimentoDispatch: dispatch,
+      getAtendimentoData,
     }}>
       {children}
     </AtendimentoCtx.Provider>

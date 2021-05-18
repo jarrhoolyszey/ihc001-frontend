@@ -15,7 +15,15 @@ import {
 
 import Input from 'components/form/Input';
 
+import useAxios from 'hooks/useAxios';
+
+import {
+  CADASTRAR_ATENDIMENTO,
+} from 'services/api';
+
+import { PacienteContext } from 'context/PacienteCtx';
 import { AtendimentoCtx } from 'context/AtendimentoCtx';
+import { TabContext } from 'context/TabContext';
 
 import theme from 'themes/theme';
 
@@ -171,10 +179,24 @@ const useStyles = makeStyles({
 })
 
 const AtendimentoCard = () => {
-  const { atendimentoState, atendimentoDispatch } = React.useContext(AtendimentoCtx);
+  const { atendimentoState, atendimentoDispatch, getAtendimentoData } = React.useContext(AtendimentoCtx);
+  const { changeTab } = React.useContext(TabContext);
+  const { pacienteDispatch } = React.useContext(PacienteContext);
   const [ sintoma, setSintoma ] = React.useState(''); // input field
   const [ prescricao, setPrescricao ] = React.useState('');
+  const { requesting, request } = useAxios();
   const css = useStyles();
+
+
+  const handleEncerrarAtendimento = async () => {
+    const res = await request(CADASTRAR_ATENDIMENTO(getAtendimentoData()));
+    
+    if(res.status === 200) {
+      atendimentoDispatch({type: 'UNSELECT_ATENDIMENTO'});
+      pacienteDispatch({type: 'UNSELECT_PACIENTE'});
+      changeTab(0); // Buscar Paciente
+    }
+  }
 
   const handleAddSintoma = () => {
     if( sintoma.length === 0 ) return;
@@ -435,8 +457,14 @@ const AtendimentoCard = () => {
           color="primary"
           startIcon={<AssignmentTurnedIn />}
           size="large"
+          onClick={handleEncerrarAtendimento}
+          disabled={requesting}
         >
-          Encerrar Atendimento
+          {
+            requesting?
+            'Salvando atendimento...' :
+            'Encerrar Atendimento'
+          }
         </Button>
       </div>
     </>

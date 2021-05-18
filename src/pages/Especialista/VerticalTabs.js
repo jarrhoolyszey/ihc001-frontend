@@ -14,7 +14,6 @@ import Atendimento from './tabs/Atendimento';
 import DadosPaciente from './tabs/DadosPaciente';
 import HistoricoPaciente from './tabs/HistoricoPaciente';
 
-// import { Context } from 'context/PacienteContext';
 import { TabContext } from 'context/TabContext';
 import { PacienteContext } from 'context/PacienteCtx';
 
