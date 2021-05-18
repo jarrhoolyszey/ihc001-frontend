@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/styles';
+import {
+  Button
+} from '@material-ui/core';
 
 import AtendimentoCard from './components/AtendimentoCard'; 
 
 import { PacienteContext } from 'context/PacienteCtx';
+import { TabContext } from 'context/TabContext';
 
 import useAxios from 'hooks/useAxios';
 
@@ -12,18 +15,13 @@ import {
   BUSCAR_ATENDIMENTOS_DO_PACIENTE,
 } from 'services/api';
 
-const useStyles = makeStyles({
-  root: {
-    border: 'dashed 1px black',
-    height: '100%',
-  }
-});
 
 const HistoricoPaciente = () => {
   const { pacienteState } = React.useContext(PacienteContext);
+  const { changeTab } = React.useContext(TabContext);
   const [ resultados, setResultados ] = React.useState([]);
   const { requesting, request } = useAxios();
-  const css = useStyles();
+  //const css = useStyles();
   
   React.useEffect(() => {
     (async () => {
@@ -32,7 +30,6 @@ const HistoricoPaciente = () => {
 
         if(res.status === 200) {
           setResultados(res.data);
-          console.log(res.data);
         }
 
       } catch (err) {
@@ -46,9 +43,25 @@ const HistoricoPaciente = () => {
   else {
     if(resultados.length > 0) {
       return (
-        resultados.map( atendimento => (
-          <AtendimentoCard key={atendimento._id} atendimento={atendimento}/>
-        ))
+        <>
+          <Button
+            onClick={ () => changeTab(1) }
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{
+              marginBottom: '20px',
+            }}
+          >
+            Novo Atendimento
+          </Button>
+
+          {
+            resultados.map( atendimento => (
+              <AtendimentoCard key={atendimento._id} atendimento={atendimento}/>
+            ))
+          }
+        </>
       )
     } else {
       return <h1>{`Sem nenhum atendimento para ${pacienteState.nome}`}</h1>

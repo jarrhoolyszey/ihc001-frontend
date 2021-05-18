@@ -27,13 +27,16 @@ import {
   BUSCAR_PACIENTE,
 } from 'services/api';
 
+import theme from 'themes/theme';
+
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: '380px',
-    border: '1px dashed green',
+    padding: '20px',
+    boxShadow: theme.boxShadow,
 
     '& form': {
       display: 'flex',
@@ -94,7 +97,7 @@ const BuscarPacienteForm = ({ toggleDialog }) => {
 
   const handleSelectClick = (paciente) => {
     pacienteDispatch({type: 'SELECIONAR_PACIENTE', payload: { paciente } })
-    changeTab(1); // tab de atendimento
+    changeTab(3); // tab Historico
   }
 
 
