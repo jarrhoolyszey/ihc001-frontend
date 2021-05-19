@@ -13,12 +13,13 @@ const useAxios = () => {
       setRequesting(true);
       response = await api.request(config);
       
-      if (response.statusText !== 'OK') {
+      if (response.status !== 200) {
         throw new Error(response.data);
       }
 
     } catch (err) {
-      //setError(err.message);
+      console.log(err);
+      
     } finally {
       setRequesting(false);
       return response;

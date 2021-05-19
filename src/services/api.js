@@ -23,6 +23,18 @@ export function VERIFICAR_TOKEN(token) {
   }
 }
 
+export function MUDAR_SENHA(id, password, newPassword) {
+  return {
+    method: 'post',
+    url: `${AUTH_URL}/change-password`,
+    data: {
+      id,
+      password,
+      newPassword,
+    }
+  }
+}
+
 
 /*********************  Requests for '/paciente' ****************************/
 export function BUSCAR_PACIENTE(query) {
