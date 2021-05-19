@@ -47,7 +47,7 @@ const useStyles = makeStyles({
 
 const CadastroPaciente = () => {
   const { changeTab } = React.useContext(TabContext);
-  const { pacienteState, pacienteDispatch } = React.useContext(PacienteContext);
+  const { pacienteDispatch } = React.useContext(PacienteContext);
 
   const { loading, request } = useAxios();
 
@@ -110,7 +110,6 @@ const CadastroPaciente = () => {
 
     // Insere o novo paciente no PacienteContext e redireciona para a guia de atendimento
     if(res.statusText === 'OK') {
-      //selectPaciente(res.data);
       const paciente = res.data;
 
       pacienteDispatch({type: 'SELECIONAR_PACIENTE', payload: {

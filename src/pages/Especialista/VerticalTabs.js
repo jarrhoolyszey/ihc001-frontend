@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/styles';
@@ -15,7 +15,6 @@ import DadosPaciente from './tabs/DadosPaciente';
 import HistoricoPaciente from './tabs/HistoricoPaciente';
 
 import { TabContext } from 'context/TabContext';
-import { PacienteContext } from 'context/PacienteCtx';
 
 import theme from 'themes/theme';
 
@@ -86,22 +85,18 @@ const a11yProps = (index) => {
 
 const VerticalTabs = () => {
   const classes = useStyles();
-  //const [value, setValue] = React.useState(0);
-  //const { paciente } = useContext(Context);
-  const { pacienteState } = useContext(PacienteContext);
-  const { tab, changeTab } = useContext(TabContext);
-
+  const { tab, changeTab } = React.useContext(TabContext);
+  
   const handleChange = (e, newValue) => {
-    //setValue(newValue);
     changeTab(newValue);
   };
 
   return (
     <div className={classes.root}>
+      
       <Sidebar>
         <Tabs
           orientation="vertical"
-          //value={value}
           value={tab}
           onChange={handleChange}
           className={classes.tabs}

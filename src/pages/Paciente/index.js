@@ -1,33 +1,39 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import { makeStyles } from '@material-ui/styles';
 
-import Header from '../../components/Header';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
 import VerticalTabs from './VerticalTabs';
 
-import { Context } from '../../context/AuthContext';
+import { Context } from 'context/AuthContext';
+import { TabProvider } from 'context/TabContext';
+
+
 
 
 const useStyles = makeStyles({
-  wrapper: {
+  pageWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    width: '100%',
-    height: '100%',
-  },
-  logoutButton: {
-    height: '40px',
+    height: 'inherit', // inherit from React 'root'
   }
 });
 
-const Paciente = (props) => {
+const Paciente = () => {
   const classes = useStyles();
-  const { user } = useContext(Context); 
+  const { user } = React.useContext(Context); 
+
 
   return (
-    <div className={classes.wrapper}>
+    <div className={classes.pageWrapper}>
       <Header/>
-      <VerticalTabs user={user}/>
+
+      <TabProvider>
+        <VerticalTabs user={user}/>
+      </TabProvider>
+
+      <Footer />
     </div>
   );
 }

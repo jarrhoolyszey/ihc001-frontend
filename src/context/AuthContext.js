@@ -16,7 +16,7 @@ function AuthProvider({ children }) {
   const [ authenticated, setAuthenticated ] = useState(false);
   const [ loading, setLoading ] = useState(true);
   const [ user, setUser ] = useState({});
-  const { requesting, request } = useAxios();
+  const { request } = useAxios();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -24,12 +24,11 @@ function AuthProvider({ children }) {
 
     if(token && user) {
       
-      // função anônima auto executavel para verificar se o token guardado ainda é valido
       (async () => {
         const response = await request(VERIFICAR_TOKEN(JSON.parse(token)));
-        console.log(response);
+        
         try {
-          if(response.statusText !== 'OK') {
+          if(response.statusText !== "OK") {
             console.log('token invalido!')
             localStorage.removeItem('token');
             localStorage.removeItem('user');
@@ -43,13 +42,8 @@ function AuthProvider({ children }) {
         } catch (err) {
           console.log(err);
         }
-
       })()
     }
-
-    // ignora a autenticação para testes
-    // setAuthenticated(true);
-
     setLoading(false);
   }, []);
 

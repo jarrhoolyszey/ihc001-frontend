@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import dayjs from 'dayjs';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -9,18 +10,33 @@ import {
 
 import { Context } from 'context/AuthContext';
 
-import CategoryCard from 'components/CategoryCard';
+import CategoryField from './components/CategoryField';
 
 import theme from 'themes/theme';
-
-import paciente from 'testes/paciente';
 
 
 const useStyles = makeStyles({
   root: {
     height: '100vh',
     padding: '20px',
-    overflowY: 'scroll',
+    
+    '& .header': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: theme.palette.primaryLight,
+      color: theme.palette.primaryText,
+      width: '100%',
+      padding: '5px 5px',
+
+      '& p': {
+        color: theme.palette.primaryText,
+        fontSize: '1rem',
+        padding: '10px',
+      },
+    },
+
   
     '& .category': {
       marginBottom: '20px',
@@ -38,61 +54,62 @@ const useStyles = makeStyles({
         
         '& .field-title': {
           fontWeight: 'bold',
+        },
+
+        '& p': {
+          padding: '0.25rem 0', 
         }
-      }
+      },
     },
   },
   
 });
 
-
 const DadosPessoais = () => {
+  const { user } = React.useContext(Context);
   const css = useStyles();
-  let { user } = useContext(Context);
-
-  user = paciente;
 
   function generateAddressString(endereco) {
     let str =  `${endereco.logradouro}, ${endereco.numero}`;
     
-    if (endereco.complemento) {
+    if (endereco.complemento !== undefined) {
       str += ` - ${endereco.complemento}`;
     }
 
-    str += ` - ${endereco.CEP} - ${endereco.bairro}`;
+    str += ` - ${endereco.bairro}`;
     str += ` - ${endereco.cidade} - ${endereco.estado}`;
+    str += ` - ${endereco.cep}`;
     
     return str;
   }
 
   return (
     <div className={css.root}>
-      <Paper className="category" elevation={3} square>
-        <Typography className="category-title" variant={'subtitle1'}>Informações Pessoais:</Typography>
+      <Paper className="category" elevation={3}>
+        <Typography className="header" variant={'subtitle1'}>Informações Pessoais:</Typography>
         <div className="category-fields">
           <Typography variant={'body2'}><span className='field-title'>Nome:</span> {user.nome + ' ' + user.sobrenome}</Typography>
           <Typography variant={'body2'}><span className='field-title'>Sexo:</span> {user.sexo}</Typography>
           <Typography variant={'body2'}><span className='field-title'>CPF:</span> {user.CPF}</Typography>
           <Typography variant={'body2'}><span className='field-title'>RG:</span> {user.RG}</Typography>
-          <Typography variant={'body2'}><span className='field-title'>Data de nascimento:</span> {user.data_nascimento}</Typography>
+          <Typography variant={'body2'}><span className='field-title'>Data de nascimento:</span> {dayjs(user.data_nascimento).format('DD/MM/YYYY')}</Typography>
           <Typography variant={'body2'}><span className='field-title'>Email:</span> {user.email}</Typography>
-        </div>
-
-        <Typography className="category-title" variant={'subtitle1'}>Endereço:</Typography>
-        <div className="category-fields">
           <Typography variant={'body2'}>
+            <span className='field-title'>Endereço: </span>
             { generateAddressString(user.endereco) }
           </Typography>
         </div>
       </Paper>
 
-      {
-        /* Lista as categorias do 'user' e seus itens */
-        user.categorias.map((categoria, index) => (
-          <CategoryCard key={`${categoria}-${index}`}category={categoria} />
+      {        
+        user.categorias.map((categoria) => (
+          <CategoryField  
+            category={categoria} 
+            id={categoria.id}
+            key={categoria.id}  
+          />
         ))
       }
-
     </div>
   );
 }

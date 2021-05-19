@@ -20,9 +20,9 @@ const HistoricoPaciente = () => {
   const { pacienteState } = React.useContext(PacienteContext);
   const { changeTab } = React.useContext(TabContext);
   const [ resultados, setResultados ] = React.useState([]);
-  const { requesting, request } = useAxios();
-  //const css = useStyles();
+  const { request } = useAxios();
   
+
   React.useEffect(() => {
     (async () => {
       try {
@@ -36,7 +36,7 @@ const HistoricoPaciente = () => {
         console.log(err);
       }  
     })()
-  }, [pacienteState]);
+  }, []);
   
   if(pacienteState.nome === '')
     return <h1>{'Sem paciente no momento =('}</h1>;

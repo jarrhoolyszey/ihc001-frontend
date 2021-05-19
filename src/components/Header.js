@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 
 import { Context } from 'context/AuthContext';
 
-import Logo from 'imgs/logo.png';
+import Logo from 'imgs/logo-bw.png';
 
 import theme from 'themes/theme';
 

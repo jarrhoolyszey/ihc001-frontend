@@ -2,10 +2,7 @@ import React from 'react';
 
 import InputMask from 'react-input-mask';
 
-import { 
-  TextField,
-  Typography, 
-} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 
 const MaskedInput = (props) => {

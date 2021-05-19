@@ -1,25 +1,16 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/styles';
-
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
 } from '@material-ui/core';
 
 
-const useStyles = makeStyles({
-  root: {
-
-  }
-})
 
 const AlertDialog = ( props ) => {
-  const css = useStyles();
   const { open, okText, cancelText, handleOk, handleCancel, children } = props;
 
   return (

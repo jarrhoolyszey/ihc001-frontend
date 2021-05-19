@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState }  from 'react';
+import React  from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -45,11 +45,9 @@ const useStyles = makeStyles({
   }
 });
 
-const Sidebar = (props) => {
+const Sidebar = ({ children }) => {
+  const { nome } = React.useContext(Context).user;
   const css = useStyles();
-  const { nome } = useContext(Context).user;
-  const { children } = props;
-
 
   return (
     <div className={css.root}>

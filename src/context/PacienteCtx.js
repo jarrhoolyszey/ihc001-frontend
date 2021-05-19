@@ -67,7 +67,7 @@ const reducer = (state, action) => {
     return { ...state, categorias: newCategorias };
   }
   if(type === 'DEL_CATEGORIA') {
-    let { category, index } = getCategoryById(payload.id);
+    let { index } = getCategoryById(payload.id);
 
     let newCategorias = state.categorias.slice();
     newCategorias.splice(index, 1);

@@ -9,8 +9,11 @@ import {
 
 import Sidebar from 'components/Sidebar';
 
+import Configuracoes from './tabs/Configuracoes';
 import DadosPessoais from './tabs/DadosPessoais';
 import Atendimentos from './tabs/Atendimentos';
+
+import { TabContext } from 'context/TabContext';
 
 import theme from 'themes/theme';
 
@@ -44,7 +47,18 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'row',
-    flexGrow: 1,
+    overflow: 'hidden',
+    flex: '1',
+
+    '& .tabpanel-wrapper': {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: '1',
+      minHeight: '100%',
+      overflowY: 'scroll',
+      paddingBottom: '20px',
+    }
+    
   },
   tabs: {
     width: '100%',
@@ -55,8 +69,7 @@ const useStyles = makeStyles({
     }
   },
   tabPanel: {
-    flexGrow: 1,
-    overflowY: 'hidden',
+    padding: '20px',
   }
 });
 
@@ -69,12 +82,12 @@ const a11yProps = (index) => {
 }
 
 
-const VerticalTabs = (props) => {
+const VerticalTabs = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const { tab, changeTab } = React.useContext(TabContext);
 
   const handleChange = (e, newValue) => {
-    setValue(newValue);
+    changeTab(newValue);
   };
 
   return (
@@ -83,24 +96,29 @@ const VerticalTabs = (props) => {
       <Sidebar>
         <Tabs
           orientation="vertical"
-          value={value}
+          value={tab}
           onChange={handleChange}
           className={classes.tabs}
         > 
           
           <Tab className="tab" label="Dados pessoais" {...a11yProps(0)} />
           <Tab className="tab" label="Atendimentos" {...a11yProps(1)} />
+          <Tab className="tab" label="Configurações" {...a11yProps(2)} />
           
         </Tabs>
       </Sidebar>
 
-      <TabPanel className={classes.tabPanel} value={value} index={0}>
-        <DadosPessoais />
-      </TabPanel>
-      <TabPanel className={classes.tabPanel} value={value} index={1}>
-        <Atendimentos />
-      </TabPanel>
-
+      <div className="tabpanel-wrapper">
+        <TabPanel className={classes.tabPanel} value={tab} index={0}>
+          <DadosPessoais />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={1}>
+          <Atendimentos />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={2}>
+          <Configuracoes />
+        </TabPanel>
+      </div>
     </div>
   );
 }

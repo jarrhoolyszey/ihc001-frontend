@@ -12,6 +12,7 @@ import {
 import { Context } from 'context/AuthContext';
 
 import Logo from 'imgs/logo.png';
+import BgImage from 'imgs/login-bg.png';
 
 import theme from 'themes/theme';
 
@@ -25,6 +26,11 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    
+    backgroundImage: `url(${BgImage})`,
+    backgroundPosition: 'center', 
+    backgroundSize: 'cover', 
+    backgroundRepeat: 'no-repeat',
   },
 
   wrapper: {
@@ -116,7 +122,7 @@ const Login = () => {
   return (
     <div className={css.root}>
     
-      <Paper className={css.wrapper} elevation={3}>
+      <Paper className={css.wrapper} elevation={10}>
         <div className="logo-wrapper">
           <img className="logo" src={Logo} alt="logo"/>
         </div>
