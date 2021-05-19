@@ -189,6 +189,8 @@ const AtendimentoCard = () => {
 
 
   const handleEncerrarAtendimento = async () => {
+    if(atendimentoState.sintomas.length === 0) return;
+
     const res = await request(CADASTRAR_ATENDIMENTO(getAtendimentoData()));
     
     if(res.status === 200) {
@@ -458,7 +460,7 @@ const AtendimentoCard = () => {
           startIcon={<AssignmentTurnedIn />}
           size="large"
           onClick={handleEncerrarAtendimento}
-          disabled={requesting}
+          disabled={atendimentoState.sintomas.length === 0 ? true : false }
         >
           {
             requesting?
