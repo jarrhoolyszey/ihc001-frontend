@@ -68,6 +68,7 @@ const ChangePassword = () => {
   
   const validate = () => {
     setError(null);
+    setMessage(null);
 
     if( form.nova !== form.confirmar ) {
       setError("Confirmação da nova senha não confere");
@@ -80,6 +81,7 @@ const ChangePassword = () => {
   const handleChange = ({target}) => {
     if(error) {
       setError('');
+      setMessage('');
       validate();
     }
 
@@ -91,21 +93,14 @@ const ChangePassword = () => {
 
     if( !validate() ) return;
 
-    const body = MUDAR_SENHA(user._id, form.atual, form.nova);
-    console.log(body);
-    const res = await request(body);
+    const res = await request(MUDAR_SENHA(user._id, form.atual, form.nova));
     console.log(res);
   
-    // if(res.status === 200) {
-    //   setMessage('Senha alterada com sucesso!');
-    // } else {
-    //   setError('Falha na alteração de senha!');
-    // }
-
-    setTimeout(() => { 
-      setError(null);
-      setMessage(null);
-    }, 5000);
+    if(res.status === 200) {
+      setMessage(res.data.msg);
+    } else {
+      setError(res.data.error);
+    }
   }
   
 

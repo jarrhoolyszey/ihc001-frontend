@@ -4,26 +4,23 @@ import api from 'services/api';
 
 
 const useAxios = () => {
-  const [requesting, setRequesting] = React.useState(false);
+  const [ requesting, setRequesting ] = React.useState(false);
   
+  /* tem que ser usado em uma função async */
   const request = async (config) => {
     let response;
 
     try {
       setRequesting(true);
-      response = await api.request(config);
-      
-      if (response.status !== 200) {
-        throw new Error(response.data);
+      response = await api.request(config)
+    } catch (error) {
+      if(error.response) {
+        response = error.response
       }
-
-    } catch (err) {
-      console.log(err);
-      
     } finally {
       setRequesting(false);
       return response;
-    }
+    }  
   }
 
   return {

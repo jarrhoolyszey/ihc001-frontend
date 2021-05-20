@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -15,7 +15,6 @@ import Logo from 'imgs/logo.png';
 import BgImage from 'imgs/login-bg.png';
 
 import theme from 'themes/theme';
-
 
 
 const useStyles = makeStyles({
@@ -77,10 +76,16 @@ const useStyles = makeStyles({
         },
 
         '& button': {
-          margin: '30px 0 10px 0',
+          margin: '0px 0 10px 0',
           width: '100%',
           height: '50px',
           backgroundColor: theme.palette.tertiary,
+        },
+        
+        '& #message-div': {
+          textAlign: 'center',
+          width: '100%',
+          padding: '10px 0 20px 0',
         }
       }
     }
@@ -89,10 +94,15 @@ const useStyles = makeStyles({
 })
 
 const Login = () => {
-  const { handleLogin, redirectByRole } = useContext(Context);
+  const { error, requesting, handleLogin, redirectByRole } = React.useContext(Context);
+  
+  const [ form, setForm ] = React.useState({
+    email: '',
+    senha: '',
+  });
   const css = useStyles();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
 
     if(user) {
@@ -102,21 +112,15 @@ const Login = () => {
     }
   });
 
-  function handleSubmit(e) {
-    e.preventDefault();
 
-    const emailEl = document.getElementById('email');
-    const senhaEl = document.getElementById('senha');  
+  const handleChange = ({target}) => {
+    setForm({ ...form, [target.id]: target.value });
+  }
 
-    const payload = {
-      email: emailEl.value,
-      senha: senhaEl.value,
-    }
-
-    emailEl.value = '';
-    senhaEl.value = '';
-
-    handleLogin(payload);
+  const handleSubmit = async (e) => {
+    e.preventDefault();  
+    
+    handleLogin(form.email, form.senha);
   }
 
   return (
@@ -129,10 +133,46 @@ const Login = () => {
 
         <div className="form-wrapper">
           <Typography variant={'h4'}>Login</Typography>
+          
           <form className={css.loginForm} autoComplete="off" onSubmit={handleSubmit}>  
-            <TextField id="email" className="input-field padded" label="Email" variant="filled" type="email" />        
-            <TextField id="senha" className="input-field" label="Senha" variant="filled" type="password" />
-            <Button variant="contained" color="primary" type="submit">Entrar</Button>
+            <TextField 
+              id="email" 
+              className="input-field padded" 
+              label="Email" 
+              variant="filled" 
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              reequired
+            />
+         
+            <TextField
+              id="senha"
+              className="input-field padded" 
+              label="Senha" 
+              variant="filled" 
+              type="password"
+              value={form.senha}
+              onChange={handleChange}
+              required
+            />
+            
+            { 
+              error && (              
+                <div id="message-div">
+                  <Typography variant='caption'>{error}</Typography>
+                </div>    
+              )
+            }
+
+            <Button 
+              variant="contained" 
+              color="primary" 
+              type="submit"
+              disabled={requesting}
+            >
+              { requesting ? 'Entrando...' : 'Entrar' }
+            </Button>
           </form>
           <Typography variant="body2">Esqueceu sua senha?</Typography>
         </div>

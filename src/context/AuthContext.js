@@ -1,24 +1,27 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React from 'react';
 
 import useAxios from 'hooks/useAxios';
 
 import api from 'services/api';
+
 import history from 'services/history';
 
 import {
+  LOGIN,
   VERIFICAR_TOKEN,
 } from 'services/api';
 
-const Context = createContext();
+const Context = React.createContext();
 
 
 function AuthProvider({ children }) {
-  const [ authenticated, setAuthenticated ] = useState(false);
-  const [ loading, setLoading ] = useState(true);
-  const [ user, setUser ] = useState({});
-  const { request } = useAxios();
+  const [ authenticated, setAuthenticated ] = React.useState(false);
+  const [ loading, setLoading ] = React.useState(true);
+  const [ error, setError ] = React.useState(null);
+  const [ user, setUser ] = React.useState({});
+  const { requesting, request } = useAxios();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
@@ -28,7 +31,7 @@ function AuthProvider({ children }) {
         const response = await request(VERIFICAR_TOKEN(JSON.parse(token)));
         
         try {
-          if(response.statusText !== "OK") {
+          if(response.status !== 200) {
             console.log('token invalido!')
             localStorage.removeItem('token');
             localStorage.removeItem('user');
@@ -60,24 +63,30 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function handleLogin(payload) {
+  const handleLogin = async (email, senha) => {
     try{
-      const response = await api.post('/auth/login', payload);
-      
-      if( response.status === 200) {
-        const { token, user } = response.data;
-        const { permissao } = response.data.user;
+      setError(null);
+      const response = await request(LOGIN(email, senha));
 
-        localStorage.setItem('token', JSON.stringify(token));
-        localStorage.setItem('user', JSON.stringify(user));
-      
-        api.defaults.headers.Authorization = `Bearer ${token}`;
-
-        setAuthenticated(true);
-        setUser(response.data.user);
-
-        redirectByRole(permissao);
+      if( response.status !== 200) {
+        setError(response.data.error);
+        return;
       }
+
+      const { token, user } = response.data;
+      const { permissao } = response.data.user;
+
+      localStorage.setItem('token', JSON.stringify(token));
+      localStorage.setItem('user', JSON.stringify(user));
+    
+      api.defaults.headers.Authorization = `Bearer ${token}`;
+
+      setAuthenticated(true);
+      setUser(response.data.user);
+
+      redirectByRole(permissao);
+      
+      return response;
 
     } catch (err) {
       console.log('error', err.message);     
@@ -100,8 +109,10 @@ function AuthProvider({ children }) {
 
   return (
     <Context.Provider value={{ 
-      loading, 
-      authenticated, 
+      loading,
+      authenticated,
+      requesting, 
+      error,
       user, 
       handleLogin, 
       handleLogout, 

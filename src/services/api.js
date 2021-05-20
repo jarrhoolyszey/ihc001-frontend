@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8080',
-  timeout: 30000,
 });
 
 const PACIENTES_URL = 'pacientes';
@@ -13,6 +12,17 @@ const ATENDIMENTOS_URL = 'atendimentos';
 
 
 /*********************  Requests for '/auth' ****************************/
+export function LOGIN(email, senha) {
+  return {
+    method: 'post',
+    url: `${AUTH_URL}/login`,
+    data: {
+      email,
+      senha
+    }
+  }
+}
+
 export function VERIFICAR_TOKEN(token) {
   return {
     method: 'post',
@@ -23,14 +33,13 @@ export function VERIFICAR_TOKEN(token) {
   }
 }
 
-export function MUDAR_SENHA(id, password, newPassword) {
+export function MUDAR_SENHA(id, senha, novaSenha) {
   return {
     method: 'post',
-    url: `${AUTH_URL}/change-password`,
+    url: `${AUTH_URL}/change-password/${id}`,
     data: {
-      id,
-      password,
-      newPassword,
+      senha,
+      novaSenha,
     }
   }
 }
