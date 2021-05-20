@@ -81,6 +81,10 @@ const useStyles = makeStyles({
           height: '50px',
           backgroundColor: theme.palette.tertiary,
         },
+
+        '& button:disabled': {
+          color: theme.palette.primaryText,
+        },
         
         '& #message-div': {
           textAlign: 'center',

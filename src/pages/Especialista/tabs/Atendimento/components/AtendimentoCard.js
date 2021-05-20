@@ -460,7 +460,8 @@ const AtendimentoCard = () => {
           startIcon={<AssignmentTurnedIn />}
           size="large"
           onClick={handleEncerrarAtendimento}
-          disabled={atendimentoState.sintomas.length === 0 ? true : false }
+          disabled={
+            (atendimentoState.sintomas.length === 0 || requesting) ? true : false }
         >
           {
             requesting?

@@ -13,6 +13,7 @@ import BuscarPaciente from './tabs/BuscarPaciente';
 import Atendimento from './tabs/Atendimento';
 import DadosPaciente from './tabs/DadosPaciente';
 import HistoricoPaciente from './tabs/HistoricoPaciente';
+import Configuracoes from './tabs/Configuracoes';
 
 import { TabContext } from 'context/TabContext';
 
@@ -62,6 +63,7 @@ const useStyles = makeStyles({
     
   },
   tabs: {
+    overflowY: 'auto',
     width: '100%',
     borderTop: `1px solid ${theme.palette.primaryText}`,
 
@@ -106,6 +108,7 @@ const VerticalTabs = () => {
           <Tab className="tab" label="Atendimento" {...a11yProps(1)} />
           <Tab className="tab" label="Dados Paciente" {...a11yProps(2)} />
           <Tab className="tab" label="Histórico" {...a11yProps(3)} />
+          <Tab className="tab" label="Configurações" {...a11yProps(4)} />
           
         </Tabs>
       </Sidebar>
@@ -122,6 +125,9 @@ const VerticalTabs = () => {
         </TabPanel>
         <TabPanel className={classes.tabPanel} value={tab} index={3}>
           <HistoricoPaciente />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={4}>
+          <Configuracoes />
         </TabPanel>
       </div>
     </div>
