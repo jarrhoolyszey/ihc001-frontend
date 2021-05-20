@@ -29,6 +29,7 @@ function AuthProvider({ children }) {
       
       (async () => {
         const response = await request(VERIFICAR_TOKEN(JSON.parse(token)));
+        console.log(response);
         
         try {
           if(response.status !== 200) {

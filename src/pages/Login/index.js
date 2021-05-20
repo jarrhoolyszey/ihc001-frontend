@@ -143,7 +143,7 @@ const Login = () => {
               type="email"
               value={form.email}
               onChange={handleChange}
-              reequired
+              required
             />
          
             <TextField
