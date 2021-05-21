@@ -37,11 +37,16 @@ const useStyles = makeStyles({
 
 const Header = () => {
   const { handleLogout } = React.useContext(Context);
+  const { pacienteState: paciente } = React.useContext(PacienteContext);  
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <img id="logo" src={Logo} alt="logo" />
+
+      {
+        <Typography>{paciente && `--- Atendimento de ${paciente.nome} em andamento ---` }</Typography>
+      }
 
       <Button 
         variant="outlined" 

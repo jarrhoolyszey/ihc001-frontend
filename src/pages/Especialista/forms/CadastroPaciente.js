@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -16,6 +17,7 @@ import useAxios from 'hooks/useAxios';
 
 import {
   CADASTRAR_PACIENTE,
+  BUSCAR_ENDERECO,
 } from 'services/api'
 
 
@@ -53,6 +55,7 @@ const CadastroPaciente = () => {
 
   // form fields
   const [sexo, setSexo] = React.useState('');
+  const [cep, setCep] = React.useState('');
   const nome = useForm();
   const sobrenome = useForm(false);
   const CPF = useForm('cpf');
@@ -62,7 +65,7 @@ const CadastroPaciente = () => {
   const logradouro = useForm();
   const numero = useForm('numero');
   const complemento = useForm(false);
-  const CEP = useForm('cep');
+  //const CEP = useForm('cep');
   const cidade = useForm();
   const estado = useForm('estado');
   const bairro = useForm();
@@ -72,6 +75,22 @@ const CadastroPaciente = () => {
   const variant = 'filled';
   const size = 'small';
 
+
+  const handleCepBlur = async () => {
+    let res;
+    try {
+      res = await axios.get(`http://viacep.com.br/ws/${cep}/json/`);
+    } catch (err) {
+      res = err.response;
+    } finally {
+      console.log(res);
+
+      if(res.status === 200) {
+        console.log('atualizar campos')
+      }
+    }
+
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -95,7 +114,8 @@ const CadastroPaciente = () => {
         logradouro: logradouro.value,
         numero: numero.value,
         complemento: complemento.value,
-        cep: CEP.value,
+        //cep: CEP.value,
+        cep: cep,
         estado: estado.value,
         cidade: cidade.value,
         bairro: bairro.value, 
@@ -257,12 +277,14 @@ const CadastroPaciente = () => {
             id="cep" 
             label="CEP" 
             type="text"
+            placeholder="00000-000"
             mask="99999-999"
             maskChar=""
             variant={variant}
             size={size}
-            placeholder="00000-000"
-            {...CEP}
+            onBlur={handleCepBlur}
+            value={cep}
+            onChange={({target}) => setCep(target.value)}
           />
         
           <Input 

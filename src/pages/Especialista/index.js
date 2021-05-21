@@ -2,7 +2,7 @@ import React from 'react'
 
 import { makeStyles } from '@material-ui/styles';
 
-import Header from 'components/Header';
+import Header from '../../components/Header';
 import VerticalTabs from './VerticalTabs';
 import Footer from 'components/Footer';
 
@@ -24,17 +24,18 @@ const Especialista = () => {
 
   return (
     <div className={css.pageWrapper}>
-      <Header />
+      <PacienteProvider>  
+        <Header />
       
-      <PacienteProvider>
         <TabProvider>
           <AtendimentoProvider>
             <VerticalTabs />
           </AtendimentoProvider>
         </TabProvider>
+
+        <Footer />
+
       </PacienteProvider>
-    
-      <Footer />
     </div>
   );
 }

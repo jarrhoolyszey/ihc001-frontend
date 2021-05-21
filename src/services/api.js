@@ -5,6 +5,8 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8080',
 });
 
+export const viacep = axios.create();
+
 const PACIENTES_URL = 'pacientes';
 const AUTH_URL = 'auth';
 const ATENDIMENTOS_URL = 'atendimentos';
@@ -92,6 +94,19 @@ export function BUSCAR_ATENDIMENTOS_DO_PACIENTE(id_paciente) {
     url: `${ATENDIMENTOS_URL}/${id_paciente}`,
   }
 }
+
+
+/********************* Requisições para terceiros ****************************/
+export function BUSCAR_ENDERECO(cep) {
+  if (cep.length > 8)
+    cep = cep.replace('-', '').replace('.', '');
+  
+  return {
+    method: 'get',
+    url: `http://viacep.com.br/ws/${cep}/json/`,
+  }
+}
+
 
 
 export default api; 
