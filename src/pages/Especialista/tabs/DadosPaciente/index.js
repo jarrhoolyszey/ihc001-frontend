@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PacienteCard from './components/PacienteCard';
+import FloatingButton from 'components/FloatingButton';
 
 import { PacienteContext } from 'context/PacienteCtx';
 
@@ -10,7 +11,12 @@ const DadosPaciente = () => {
   const { pacienteState } = React.useContext(PacienteContext);
 
   if( pacienteState.nome !== '' ) {
-    return <PacienteCard />
+    return (
+      <>
+        <PacienteCard />
+        <FloatingButton />
+      </>
+    )
   } else {
     return <h1>{'Sem paciente no momento =('}</h1>
   }

@@ -65,7 +65,6 @@ const CadastroPaciente = () => {
   const logradouro = useForm();
   const numero = useForm('numero');
   const complemento = useForm(false);
-  //const CEP = useForm('cep');
   const cidade = useForm();
   const estado = useForm('estado');
   const bairro = useForm();
@@ -76,18 +75,25 @@ const CadastroPaciente = () => {
   const size = 'small';
 
 
-  const handleCepBlur = async () => {
+  const handleCepBlur = async ({target}) => { 
     let res;
     try {
-      res = await axios.get(`http://viacep.com.br/ws/${cep}/json/`);
+      if( target.value.length >= 8) { 
+        res = await axios.get(`http://viacep.com.br/ws/${cep}/json/`);
+    
+        if(!res.data.erro) {
+          const { data } = res;
+
+          logradouro.setValue(data.logradouro);
+          bairro.setValue(data.bairro);
+          cidade.setValue(data.localidade);
+          estado.setValue(data.uf);
+        }
+      }
     } catch (err) {
       res = err.response;
     } finally {
       console.log(res);
-
-      if(res.status === 200) {
-        console.log('atualizar campos')
-      }
     }
 
   }
@@ -114,7 +120,6 @@ const CadastroPaciente = () => {
         logradouro: logradouro.value,
         numero: numero.value,
         complemento: complemento.value,
-        //cep: CEP.value,
         cep: cep,
         estado: estado.value,
         cidade: cidade.value,
@@ -210,6 +215,9 @@ const CadastroPaciente = () => {
             type="date"
             variant={variant}
             size={size}
+            InputLabelProps={{
+              shrink: true,
+            }}
             {...nascimento}
           />
           

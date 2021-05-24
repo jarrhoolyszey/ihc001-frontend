@@ -96,17 +96,5 @@ export function BUSCAR_ATENDIMENTOS_DO_PACIENTE(id_paciente) {
 }
 
 
-/********************* Requisições para terceiros ****************************/
-export function BUSCAR_ENDERECO(cep) {
-  if (cep.length > 8)
-    cep = cep.replace('-', '').replace('.', '');
-  
-  return {
-    method: 'get',
-    url: `http://viacep.com.br/ws/${cep}/json/`,
-  }
-}
-
-
 
 export default api; 

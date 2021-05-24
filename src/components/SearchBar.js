@@ -18,8 +18,7 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     alignItems: 'center',
     gap: '1rem',
-    padding: '5px 10px',
-    marginBottom: '20px',
+    padding: '0px 10px',
     
     '& .search-input': {
       flexGrow: '1',
