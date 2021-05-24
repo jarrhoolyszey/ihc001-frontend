@@ -10,8 +10,7 @@ import {
 
 import { Context } from 'context/AuthContext';
 
-import CategoryField from './components/CategoryField';
-import SearchBar from 'components/SearchBar';
+import CategoryContainer from 'components/CategoryContainer';
 
 import theme from 'themes/theme';
 
@@ -68,8 +67,6 @@ const useStyles = makeStyles({
 
 const DadosPessoais = () => {
   const { user } = React.useContext(Context);
-  const [ results, setResults ] = React.useState(user.categorias);
-  const searchRef = React.useRef();
   const css = useStyles();
 
   function generateAddressString(endereco) {
@@ -84,18 +81,6 @@ const DadosPessoais = () => {
     str += ` - ${endereco.cep}`;
     
     return str;
-  }
-
-  const searchFilter = (key) => {
-    let result = user.categorias.filter((category) => {
-      return category.title.toLowerCase().includes(key.toLowerCase());
-    })
-
-    return result;
-  }
-
-  const handleSearchChange = () => {
-    setResults(searchFilter(searchRef.current.value));
   }
 
   return (
@@ -116,22 +101,7 @@ const DadosPessoais = () => {
         </div>
       </Paper>
 
-      <SearchBar 
-        ref={searchRef}
-        onChange={handleSearchChange}
-        placeholder={'Buscar categoria...'}
-        elevation={3} 
-      />
-
-      {        
-        results.map((categoria) => (
-          <CategoryField  
-            category={categoria} 
-            id={categoria.id}
-            key={categoria.id}  
-          />
-        ))
-      }
+      <CategoryContainer categories={user.categorias} />
     </div>
   );
 }
