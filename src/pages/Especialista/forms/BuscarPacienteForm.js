@@ -15,8 +15,6 @@ import DefaultImage from 'imgs/default-profile-picture.png';
 import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
 
-
-//import { Context } from 'context/PacienteContext';
 import { PacienteContext } from 'context/PacienteCtx';
 import { TabContext } from 'context/TabContext';
 

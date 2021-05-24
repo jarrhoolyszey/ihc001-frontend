@@ -86,7 +86,10 @@ const CadastroPaciente = () => {
       console.log(res);
 
       if(res.status === 200) {
-        console.log('atualizar campos')
+        const { data } = res;
+
+        logradouro.value = data.logradouro;
+        bairro.value = data.bairro;
       }
     }
 

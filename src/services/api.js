@@ -7,8 +7,9 @@ const api = axios.create({
 
 export const viacep = axios.create();
 
-const PACIENTES_URL = 'pacientes';
 const AUTH_URL = 'auth';
+const PACIENTES_URL = 'pacientes';
+const ESPECIALISTAS_URL = 'especialistas';
 const ATENDIMENTOS_URL = 'atendimentos';
 
 
@@ -78,6 +79,16 @@ export function ATUALIZAR_PACIENTE(id, dadosPaciente) {
     data: dadosPaciente
   }
 }
+
+
+/*********************  Requests for '/especialistas' ****************************/
+export function LISTAR_ESPECIALISTAS() {
+  return {
+    method: 'get',
+    url: `${ESPECIALISTAS_URL}`,
+  }
+}
+
 
 /*********************  Requests for '/atendimentos' ****************************/
 export function CADASTRAR_ATENDIMENTO(dadosAtendimento) {
