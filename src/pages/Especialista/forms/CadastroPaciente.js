@@ -94,16 +94,6 @@ const CadastroPaciente = () => {
       res = err.response;
     } finally {
       console.log(res);
-<<<<<<< HEAD
-
-      if(res.status === 200) {
-        const { data } = res;
-
-        logradouro.value = data.logradouro;
-        bairro.value = data.bairro;
-      }
-=======
->>>>>>> refs/remotes/origin/master
     }
 
   }

@@ -56,7 +56,6 @@ const useStyles = makeStyles({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
       flex: '1',
       overflowY: 'scroll',
       minHeight: '100%',
