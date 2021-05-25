@@ -55,7 +55,6 @@ const useStyles = makeStyles({
     '& .tabpanel-wrapper': {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
       flex: '1',
       overflowY: 'scroll',
       minHeight: '100%',

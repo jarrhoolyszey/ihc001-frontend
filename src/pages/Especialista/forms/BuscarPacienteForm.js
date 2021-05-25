@@ -34,15 +34,20 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     width: '380px',
     padding: '20px',
+    margin: '0 auto',
     boxShadow: theme.boxShadow,
 
     '& form': {
       display: 'flex',
       flexDirection: 'column',
 
+      '& .bp-cpf': {
+        marginBottom: '10px',
+      },
+
       '& button': {
         marginTop: '20px',
-      }
+      },
     }
   },
   listItem: {
@@ -69,10 +74,10 @@ const useStyles = makeStyles({
 const BuscarPacienteForm = ({ toggleDialog }) => {
   const { pacienteDispatch } = React.useContext(PacienteContext);
   const { changeTab } = React.useContext(TabContext);
-  const [resultado, setResultado] = React.useState([]);
+  const [ resultado, setResultado ] = React.useState([]);
   const { requesting, request } = useAxios();
-  const CPF = useForm();
-  const email = useForm();
+  const CPF = useForm('cpf');
+  const email = useForm('email');
   const css = useStyles();
 
 
@@ -103,7 +108,8 @@ const BuscarPacienteForm = ({ toggleDialog }) => {
     <div className={css.root}>
       <Typography>Buscar paciente por:</Typography>
       <form onSubmit={handleSubmit}>
-        <MaskedInput 
+        <MaskedInput
+          className="bp-cpf"
           id="buscar-cpf"
           type="text"
           mask="999.999.999-99"

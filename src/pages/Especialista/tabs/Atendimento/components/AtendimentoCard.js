@@ -30,10 +30,16 @@ import theme from 'themes/theme';
 
 const useStyles = makeStyles({
   paper: {
+    margin: '0 auto',
     marginBottom: '20px',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
+    width: '80%',
+
+    '@media(max-width: 720px)': {
+      width: '100%',
+    }
   },
 
   header : {

@@ -174,7 +174,7 @@ const CategoryField = ({category, edit, id}) => {
   }
 
   return ( 
-    <div className={css.root}>
+    <div className={`${css.root} category-wrapper`}>
       <div className="header">
         <Typography>
           <input value={category.title} onChange={handleTitleChange} readOnly={!edit} />
@@ -221,7 +221,6 @@ const CategoryField = ({category, edit, id}) => {
                   row.map((cell, cellIndex) => (
                     <td key={`cell-${rowIndex}-${cellIndex}`}>
                       <input
-                        id={`input-${rowIndex}-${cellIndex}`}
                         value={category.rows[rowIndex][cellIndex]} 
                         onChange={handleChange}
                         readOnly={!edit}
