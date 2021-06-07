@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AtendimentoCard from './components/AtendimentoCard';
+import SemPaciente from '../../components/SemPaciente';
 
 import { PacienteContext } from 'context/PacienteCtx';
 
@@ -14,7 +15,7 @@ const Atendimento = () => {
     )
   } else {
     return (
-      <h1>Sem paciente no momento</h1>
+      <SemPaciente />
     )
   }
   

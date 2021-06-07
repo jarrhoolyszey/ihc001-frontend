@@ -14,6 +14,7 @@ import Atendimento from './tabs/Atendimento';
 import DadosPaciente from './tabs/DadosPaciente';
 import HistoricoPaciente from './tabs/HistoricoPaciente';
 import Configuracoes from './tabs/Configuracoes';
+import Ajuda from './tabs/Ajuda';
 
 import { TabContext } from 'context/TabContext';
 
@@ -109,6 +110,7 @@ const VerticalTabs = () => {
           <Tab className="tab" label="Dados Paciente" {...a11yProps(2)} />
           <Tab className="tab" label="Histórico" {...a11yProps(3)} />
           <Tab className="tab" label="Configurações" {...a11yProps(4)} />
+          <Tab className="tab" label="Ajuda" {...a11yProps(5)} />
           
         </Tabs>
       </Sidebar>
@@ -128,6 +130,9 @@ const VerticalTabs = () => {
         </TabPanel>
         <TabPanel className={classes.tabPanel} value={tab} index={4}>
           <Configuracoes />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={5}>
+          <Ajuda />
         </TabPanel>
       </div>
     </div>

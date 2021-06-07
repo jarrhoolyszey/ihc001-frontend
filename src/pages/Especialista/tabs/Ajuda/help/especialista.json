@@ -1,0 +1,47 @@
+[
+  {
+    "titulo": "Buscar Paciente",
+    "descricao": [
+      "Na aba 'Buscar Paciente' é possível encontrar pacientes de interesse. Para isso, basta preencher os campos 'CPF' e/ou 'Email' e clicar em 'BUSCAR'.",
+      " - Caso o paciente for encontrado, será apresentado um quadro com as informações do mesmo. Então, basta clicar em 'SELECIONAR' que o sistema se encarrega de trazer as informações do paciente selecionado.",
+      " - Caso a busca não encontre algum registro correspondente, será apresentada a opção de cadastrar um novo paciente. Escolha entre prosseguir com o cadastro ou simplesmente feche a janela."
+    ] 
+  },
+  {
+    "titulo": "Atendimento",
+    "descricao": [
+      "Na aba 'Atendimento' por padrão temos um formulário de atendimento em branco, onde é possível regsitrar os sintomas do paciente, solicitar exames, alterar o status do exame, definir o diagnóstico, prescrever tratamentos para o paciente etc.",
+      "Também é possível continuar um atendimento selecionado na aba 'Histórico', se este for o caso, o formulário de atendimento virá preenchido com as informações do atendimento escolhido.",
+      "Dica: o atendimento só é salvo no sistema no momento em que o botão 'ENCERRAR ATENDIMENTO' é pressionado."
+    ] 
+  },
+  {
+    "titulo": "Dados Paciente",
+    "descricao": [
+      "Na aba 'Dados Paciente' é apresentado os dados pessoais e as categorias registradas no decorrer das consultas do paciente.",
+
+      "Nesta aba é possível alterar os dados do paciente, caso seja necessário. Também é onde são criadas as categorias do paciente, por exemplo, registro de vacinações, alergias etc.",
+
+      "Para alterar os dados ou cadastrar uma nova categoria basta clicar no botão 'EDITAR', assim será habilitado os botões de controle para efetuar as alterações.",
+      
+      "Dica: As categorias permitem que você crie tabelas como desejar, assim sendo possível inserir colunas e linhas de acordo com sua necessidade.",
+      
+      "Dica: O sistema só salva as alterações quando o botão 'SALVAR' for pressionado."
+    ]
+  },
+  {
+    "titulo": "Histórico",
+    "descricao": [
+      "Na aba 'Histórico' será apresentado um resumo dos atendimentos do paciente selecionado. Em cada atendimento é apresentada a opção 'CONTINUAR ATENDIMENTO', selecione está opção caso deseje continuar ou alterar algo no atendimento.",
+
+      "Caso não tenha nenhum paciente em atendimento, será exibido um aviso para você."
+    ]
+  },
+  {
+    "titulo": "Configurações",
+    "descricao": [
+      "Na aba 'Configurações' é possível alterar sua senha caso seja necessário."
+    ]
+  }
+
+]

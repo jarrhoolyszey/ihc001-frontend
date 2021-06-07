@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 
 import AtendimentoCard from './components/AtendimentoCard'; 
+import SemAtendimentos from './components/SemAtendimentos';
 
 import { PacienteContext } from 'context/PacienteCtx';
 import { TabContext } from 'context/TabContext';
@@ -64,7 +65,7 @@ const HistoricoPaciente = () => {
         </>
       )
     } else {
-      return <h1>{`Sem nenhum atendimento para ${pacienteState.nome}`}</h1>
+      return <SemAtendimentos nome={pacienteState.nome} />
     }
   }
   

@@ -1,0 +1,24 @@
+[
+  {
+    "titulo": "Dados Pessoais",
+    "descricao": [
+      "Na aba 'Dados Pessoais' você pode conferir seus dados cadastrados no sistema e também consultar categorias criadas pelos especialistas durante seus atendimentos, por exemplo, alergias, doenças crônicas etc.",
+
+      "Dica: caso você possua muitas categorias cadastradas, existe um campo de filtro para facilitar a busca de uma categoria específica.",
+
+      "Caso encontre alguma incosistência por favor entre em contato com nossa equipe pelos canais de atendimento ou solicite a correção em sua próxima consulta."
+    ] 
+  },
+  {
+    "titulo": "Atendimentos",
+    "descricao": [
+      "Na aba 'Atendimentos' você pode consultar o registro de suas consultas."
+    ] 
+  },
+  {
+    "titulo": "Configurações",
+    "descricao": [
+      "Na aba 'Configurações' é possível alterar sua senha. Recomendamos fortemente que altere a senha que recebeu por padrão em sua primeira consulta."
+    ]
+  }
+]

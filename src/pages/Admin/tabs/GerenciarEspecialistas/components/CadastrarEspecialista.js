@@ -1,4 +1,3 @@
-import CadastroPaciente from 'pages/Especialista/forms/CadastroPaciente';
 import React from 'react';
 
 const CadastrarEspecialista = (props) => {

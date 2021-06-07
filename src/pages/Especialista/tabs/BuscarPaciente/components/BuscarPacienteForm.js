@@ -11,6 +11,11 @@ import {
   Button,
 } from '@material-ui/core';
 
+import {
+  Add,
+  Search,
+} from '@material-ui/icons';
+
 import DefaultImage from 'imgs/default-profile-picture.png';
 import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
@@ -32,22 +37,45 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    width: '380px',
-    padding: '20px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '420px',
+    padding: '40px 20px',
     margin: '0 auto',
     boxShadow: theme.boxShadow,
 
     '& form': {
+      width: '100%',
       display: 'flex',
       flexDirection: 'column',
 
       '& .bp-cpf': {
-        marginBottom: '10px',
-      },
-
-      '& button': {
+        marginBottom: '20px',
         marginTop: '20px',
       },
+    }
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: '20px 0',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.125)',
+
+    '& button': {
+      width: '49%',
+    }
+  },
+
+  listRoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+
+    '& .result-title': {
+      padding: '20px 0',
     }
   },
   listItem: {
@@ -59,7 +87,9 @@ const useStyles = makeStyles({
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      marginRight: '10px',
+      paddingRight: '10px',
+      marginRight: '20px',
+      borderRight: '1px solid rgba(0, 0, 0, 0.125)',
     },
 
     '& .avatar': {
@@ -71,7 +101,7 @@ const useStyles = makeStyles({
 })
 
 
-const BuscarPacienteForm = ({ toggleDialog }) => {
+const BuscarPacienteForm = ({ toggleDialog, showForm }) => {
   const { pacienteDispatch } = React.useContext(PacienteContext);
   const { changeTab } = React.useContext(TabContext);
   const [ resultado, setResultado ] = React.useState([]);
@@ -96,6 +126,12 @@ const BuscarPacienteForm = ({ toggleDialog }) => {
     } else {
       toggleDialog(true);
     }
+  }
+
+  const handleCadastrar = (e) => {
+    e.preventDefault();
+
+    showForm();
   }
 
   const handleSelectClick = (paciente) => {
@@ -125,15 +161,42 @@ const BuscarPacienteForm = ({ toggleDialog }) => {
           variant="filled"
           {...email}
         />
-        {
-          requesting ?
-          <Button type="submit" variant="contained" color="primary" disabled>Buscando...</Button> :
-          <Button type="submit" variant="contained" color="primary">Buscar</Button>
-        }
+        
+        <div className={css.buttons}>
+          {
+            requesting ?
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary"
+              startIcon={ <Search /> } 
+              disabled
+            >
+              Buscando...
+            </Button> :
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary"
+              startIcon={ <Search /> }
+            >
+              Buscar
+            </Button>
+          }
+          <Button 
+            id="cadastro-btn"
+            variant="outlined"
+            color="primary"
+            startIcon={ <Add /> }
+            onClick={ handleCadastrar }
+          >
+            Cadastrar
+          </Button>
+        </div>
       </form>
     
       <List className={css.listRoot}>
-        { resultado.length > 0 && <Typography>Resultados:</Typography> }
+        { resultado.length > 0 && <Typography className="result-title">Resultados:</Typography> }
         {
           resultado.map((paciente) => (
             
@@ -153,12 +216,16 @@ const BuscarPacienteForm = ({ toggleDialog }) => {
                 </Button>
               </div>
               <ListItemText 
-                primary={`${paciente.nome} ${paciente.sobrenome}`}
+                primary={
+                  <Typography style={{marginBottom: '10px', fontWeight: 'bold'}}>
+                    {`${paciente.nome} ${paciente.sobrenome}`}
+                  </Typography>
+                }
                 secondary={
                   <>
-                    <Typography component={'span'}>CPF: {paciente.CPF}</Typography>
-                    <Typography component={'span'}>RG: {paciente.RG}</Typography>
-                    <Typography component={'span'}>Email: {paciente.email}</Typography>
+                    <Typography component={'span'} variant="body2">CPF: {paciente.CPF}</Typography><br/>
+                    <Typography component={'span'} variant="body2">RG: {paciente.RG}</Typography><br/>
+                    <Typography component={'span'} variant="body2">Email: {paciente.email}</Typography>
                   </>
                 }
               />

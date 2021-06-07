@@ -22,6 +22,7 @@ const useStyles = makeStyles({
     maxHeight: '56px',
     padding: '10px 20px',
     backgroundColor: theme.palette.primary,
+    
     color: theme.palette.primaryText,
 
     '& #logo': {
@@ -45,7 +46,7 @@ const Header = () => {
       <img id="logo" src={Logo} alt="logo" />
 
       {
-        <Typography>{paciente && `--- Atendimento de ${paciente.nome} em andamento ---` }</Typography>
+        <Typography>{paciente.nome !== '' && `--- Atendimento de ${paciente.nome} em andamento ---` }</Typography>
       }
 
       <Button 

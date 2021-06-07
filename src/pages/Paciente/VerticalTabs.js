@@ -12,6 +12,7 @@ import Sidebar from 'components/Sidebar';
 import Configuracoes from './tabs/Configuracoes';
 import DadosPessoais from './tabs/DadosPessoais';
 import Atendimentos from './tabs/Atendimentos';
+import Ajuda from './tabs/Ajuda';
 
 import { TabContext } from 'context/TabContext';
 
@@ -53,16 +54,15 @@ const useStyles = makeStyles({
     '& .tabpanel-wrapper': {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
       flex: '1',
-      //minHeight: '100%',
       overflowY: 'scroll',
-      paddingBottom: '20px',
+      minHeight: '100%',
+      padding: '20px 0',
     }
     
   },
   tabs: {
+    overflowY: 'auto',
     width: '100%',
     borderTop: `1px solid ${theme.palette.primaryText}`,
 
@@ -106,6 +106,7 @@ const VerticalTabs = () => {
           <Tab className="tab" label="Dados pessoais" {...a11yProps(0)} />
           <Tab className="tab" label="Atendimentos" {...a11yProps(1)} />
           <Tab className="tab" label="Configurações" {...a11yProps(2)} />
+          <Tab className="tab" label="Ajuda" {...a11yProps(3)} />
           
         </Tabs>
       </Sidebar>
@@ -119,6 +120,9 @@ const VerticalTabs = () => {
         </TabPanel>
         <TabPanel className={classes.tabPanel} value={tab} index={2}>
           <Configuracoes />
+        </TabPanel>
+        <TabPanel className={classes.tabPanel} value={tab} index={3}>
+          <Ajuda />
         </TabPanel>
       </div>
     </div>

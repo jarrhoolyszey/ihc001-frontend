@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/styles';
 
 import { Button, Paper } from '@material-ui/core';
 
+import { Save, Clear } from '@material-ui/icons';
+
 import Input from 'components/form/Input';
 import MaskedInput from 'components/form/MaskedInput';
 import Select from 'components/form/Select';
@@ -17,7 +19,6 @@ import useAxios from 'hooks/useAxios';
 
 import {
   CADASTRAR_PACIENTE,
-  BUSCAR_ENDERECO,
 } from 'services/api'
 
 
@@ -25,9 +26,9 @@ const useStyles = makeStyles({
   root: {
     padding: '20px',
     maxWidth: '680px',
+    margin: '0 auto',
   },
   form: {
-    border: '1px dashed blue',
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
@@ -43,11 +44,18 @@ const useStyles = makeStyles({
         maxWidth: '100px',
       }
     }
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: '10px',
+    marginTop: '10px',
   }
 })
 
 
-const CadastroPaciente = () => {
+const CadastroPaciente = ({ close }) => {
   const { changeTab } = React.useContext(TabContext);
   const { pacienteDispatch } = React.useContext(PacienteContext);
 
@@ -314,10 +322,35 @@ const CadastroPaciente = () => {
           />
         </div>
 
-        { loading ? 
-          <Button variant="contained" color="primary" type="submit" disabled>Cadastrando...</Button> :
-          <Button variant="contained" color="primary" type="submit">Cadastrar</Button>
-        }
+        <div className={css.buttons}>
+          { loading ? 
+            <Button 
+              variant="contained" 
+              color="primary" 
+              type="submit"
+              startIcon={<Save />}
+              disabled
+            >
+              Cadastrando...
+            </Button> :
+            <Button 
+              variant="contained" 
+              color="primary" 
+              type="submit"
+              startIcon={<Save />}
+            >
+              Cadastrar
+            </Button>
+          }
+          <Button
+            variant="outlined"
+            color="secondary"
+            startIcon={ <Clear /> }
+            onClick={ close }
+          >
+            Cancelar
+          </Button>
+        </div>
       </form>
     </Paper>
   )
