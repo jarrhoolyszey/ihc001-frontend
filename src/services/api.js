@@ -10,6 +10,7 @@ export const viacep = axios.create();
 const AUTH_URL = 'auth';
 const PACIENTES_URL = 'pacientes';
 const ESPECIALISTAS_URL = 'especialistas';
+const ADMIN_URL = 'admin';
 const ATENDIMENTOS_URL = 'atendimentos';
 
 
@@ -89,6 +90,15 @@ export function LISTAR_ESPECIALISTAS() {
   }
 }
 
+
+/************************  Requests for '/admin' ********************************/
+export function CADASTRAR_ESPECIALISTA(dadosEspecialista) {
+  return {
+    method: 'post',
+    url: `${ESPECIALISTAS_URL}`,
+    data: dadosEspecialista,
+  }
+}
 
 /*********************  Requests for '/atendimentos' ****************************/
 export function CADASTRAR_ATENDIMENTO(dadosAtendimento) {

@@ -10,9 +10,19 @@ import {
 import ListaEspecialistas from './components/ListaEspecialistas';
 import CadastrarEspecialista from './components/CadastrarEspecialista';
 
+import theme from 'themes/theme';
+
+
 const useStyles = makeStyles({
   root: {
-
+    padding: '20px 5%',
+  },
+  buttons: {
+    boxShadow: theme.boxShadow,
+    
+    '& button': {
+      borderRadius: '0',
+    }
   }
 });
 
@@ -31,7 +41,7 @@ const GerenciarEspecialistas = () => {
 
   return (
     <div className={css.root}>
-      <ButtonGroup>
+      <ButtonGroup className={css.buttons} variant="contained" color="primary" disableElevation>
         <Button 
           onClick={() => handleClick(LISTAR_INDEX)}
         >
@@ -44,8 +54,8 @@ const GerenciarEspecialistas = () => {
         </Button>
       </ButtonGroup>
 
-      <ListaEspecialistas panel={panel} index={LISTAR_INDEX} />
-      <CadastrarEspecialista panel={panel} index={CADASTRAR_INDEX} />
+      <ListaEspecialistas hidden={panel !== LISTAR_INDEX} />
+      <CadastrarEspecialista hidden={panel !== CADASTRAR_INDEX} />
     </div>
   )
 }
